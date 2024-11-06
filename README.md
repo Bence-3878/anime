@@ -1,38 +1,35 @@
 # Házi feladat
 
-Ebbe a könyvtárba kerül az opcionális **házi feladat** megoldása. Továbbá ide kell majd a specifikációt is elkészíteni. 
-
-## Beadás és értékelés
-> [!IMPORTANT]
-> A specifikációt és a házi feladatot a laborokhoz hasonlóan pull request formájában kell beadni a határidő előtt a Moodle alatt található **Git tudnivalók** leírásban található utasítások alapján.
-> - Hozz létre egy **új branchet** `megoldas` néven, és ezen dolgozz.
-> - Töltsd ki a `neptun.txt` fájlt a saját Neptun kódoddal.
-> - Minden egyes részegység után kommitolj, és használj értelmes kommit üzeneteket.
-> - A feladat végeztével **pushold** a megoldásodat és hozz létre egy **pull requestet**.
-> - Ellenőrizd a pull request tartalmát és rendeld hozzá a laborvezetődet **reviewernek**.
-
-> [!CAUTION]
-> A nem ilyen formában megadott megoldások nem lesznek értékelve!
-
 ## Specifikáció
 
 ### A feladat rövid bemutatása
 
-...
+Egy animéket(japán rajzfilmek) nyiliván tartó oldal. A [MyAnimeList](https://myanimelist.net) gyenge utánzata lényegében. A felhasználok felvehetnek a listájulra hogy mit látak és mit terveznek megnézni.
 
 ### Az adatbázis sémája
 
-...
+Film adatbázis
+Felhasználó adatok
+Felhasználók listája
 
 ![](schema.png)
 
 ### Elérhető oldalak és funkciók listája
 
-- Oldal 1
-    - Funkció 1
-    - Funkció 2
-    - ...
-- ...
+- kezdő oldal
+    - eléri a bejelentkezési/registrlációs felületet
+    - eléri a kereső oldalt ahol tud böngészni
+    - eléri a saját listáját a felhasználó
+    - eléri a profil beálitásait
+    -
+- bejenetkező oldal
+    - be tud jelentkezni
+- regisztlációs oldal
+    - regisztálni tud
+- kereső oldal
+  - böngészni tud az adatbázisban
+  - feltud venni alkotásokat a listájára
+  - ha joga van hozzá tud benne modositást is végezni
 
 ## Elkészült házi feladat
 
