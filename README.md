@@ -4,7 +4,7 @@
 
 ### A feladat rövid bemutatása
 
-Egy animéket(japán rajzfilmek) nyiliván tartó oldal. A [MyAnimeList](https://myanimelist.net) gyenge utánzata lényegében. A felhasználok felvehetnek a listájulra hogy mit látak és mit terveznek megnézni.
+Egy animéket(japán rajzfilmek) nyilván tartó oldal. A [MyAnimeList](https://myanimelist.net) gyenge utánzata lényegében. A felhasználók felvehetnek a listájukra, hogy mit láttak és mit terveznek megnézni.
 
 ### Az adatbázis sémája
 
@@ -17,19 +17,19 @@ Felhasználók listája
 ### Elérhető oldalak és funkciók listája
 
 - kezdő oldal
-    - eléri a bejelentkezési/registrlációs felületet
+    - eléri a bejelentkezési/regisztrációs felületet
     - eléri a kereső oldalt ahol tud böngészni
     - eléri a saját listáját a felhasználó
-    - eléri a profil beálitásait
+    - eléri a profil beállításait
     -
-- bejenetkező oldal
+- bejelentkező oldal
     - be tud jelentkezni
-- regisztlációs oldal
-    - regisztálni tud
+- regisztrációs oldal
+    - regisztrálni tud
 - kereső oldal
   - böngészni tud az adatbázisban
-  - feltud venni alkotásokat a listájára
-  - ha joga van hozzá tud benne modositást is végezni
+  - fel tud venni alkotásokat a listájára
+  - ha van hozzá joga, tud benne módosításokat is végezni
 
 ## Elkészült házi feladat
 
