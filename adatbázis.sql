@@ -7,7 +7,8 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE,
+    SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 CREATE TABLE IF NOT EXISTS `hazi`.`felhasználó` (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -19,21 +20,20 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Anime` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) AUTO_INCREMENT,
   `elözmény_id` INT(11) NULL DEFAULT NULL,
   `folytatás_id` INT(11) NULL DEFAULT NULL,
   `szezon_id` INT(11) NULL DEFAULT NULL,
-  `romanji cim` VARCHAR(120) NOT NULL,
-  `angol cím` VARCHAR(120) NOT NULL,
+  `romanji cim` VARCHAR(120) NOT NULL unique ,
+  `angol cím` VARCHAR(120) NOT NULL unique ,
   `leírás` TEXT(2000) NOT NULL,
-  `hossza` INT(11) NULL DEFAULT NULL,
+  `hossza` time NULL DEFAULT NULL,
+  `epizod szám` int null default null,
   `kezdő dátum` DATE NULL DEFAULT NULL,
   `vége dátum` DATE NULL DEFAULT NULL,
-  `status` ENUM('fut', 'befejezet', 'tervezet', 'szünet') NOT NULL,
+  `status` ENUM('fut', 'befejezet', 'tervezet', 'szünet') NOT NULL default 'tervezet',
   `értékelés` FLOAT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `romanji cim_UNIQUE` (`romanji cim` ASC) VISIBLE,
-  UNIQUE INDEX `angol cím_UNIQUE` (`angol cím` ASC) VISIBLE,
   INDEX `fk_Anime_Anime_idx` (`elözmény_id` ASC) VISIBLE,
   INDEX `fk_Anime_Anime1_idx` (`folytatás_id` ASC) VISIBLE,
   INDEX `fk_Anime_szezon1_idx` (`szezon_id` ASC) VISIBLE,
@@ -56,7 +56,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Studió` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `id` INT(11) AUTO_INCREMENT,
   `név` VARCHAR(45) NOT NULL,
   `alapitás` DATE NOT NULL,
   PRIMARY KEY (`id`))
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `hazi`.`Anime_lista` (
   `Anime_id` INT(11) NOT NULL,
   `status` ENUM('néz', 'befejezet', 'tervezet', 'drop') NULL DEFAULT 'néz',
   `hol_tart` INT(11) NULL DEFAULT NULL,
-  `értékeél` INT(11) NULL DEFAULT NULL,
+  `értékelés` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`felhasználó_id`, `Anime_id`),
   INDEX `fk_felhasználó_has_Anime_Anime1_idx` (`Anime_id` ASC) VISIBLE,
   INDEX `fk_felhasználó_has_Anime_felhasználó1_idx` (`felhasználó_id` ASC) VISIBLE,
@@ -112,10 +112,11 @@ CREATE TABLE IF NOT EXISTS `hazi`.`Karakter` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `hazi`.`ember` (
+CREATE TABLE IF NOT EXISTS `hazi`.személy (
   `id` INT(11) NOT NULL AUTO_INCREMENT,
   `név` VARCHAR(45) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
+  `születés nap` datetime,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -141,7 +142,7 @@ CREATE TABLE IF NOT EXISTS `hazi`.`szerep` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Anime_has_Karakter_szinkron_szinés1`
     FOREIGN KEY (`szinkron_szinés_id`)
-    REFERENCES `hazi`.`ember` (`id`)
+    REFERENCES `hazi`.személy (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -179,7 +180,7 @@ CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_szinés` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_felhasználó_has_szinkron_szinés_szinkron_szinés1`
     FOREIGN KEY (`szinkron_szinés_id`)
-    REFERENCES `hazi`.`ember` (`id`)
+    REFERENCES `hazi`.személy (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -206,7 +207,7 @@ CREATE TABLE IF NOT EXISTS `hazi`.`stáb` (
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Anime_has_ember_ember1`
     FOREIGN KEY (`ember_id`)
-    REFERENCES `hazi`.`ember` (`id`)
+    REFERENCES `hazi`.személy (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
