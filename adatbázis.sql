@@ -12,7 +12,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `hazi` DEFAULT CHARACTER SET utf8 ;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`felhasználó` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `felhasználó_név` VARCHAR(12) NOT NULL,
   `jogosultság` ENUM('admin', 'editor', 'user') NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`),
@@ -21,7 +21,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Anime` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `elözmény_id` INT(11) NULL DEFAULT NULL,
   `folytatás_id` INT(11) NULL DEFAULT NULL,
   `szezon_id` INT(11) NOT NULL,
@@ -58,7 +58,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Studió` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `név` VARCHAR(45) NOT NULL,
   `alapitás` DATE NOT NULL,
   PRIMARY KEY (`id`))
@@ -107,7 +107,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Karakter` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `név` VARCHAR(45) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
   `kor` INT(11) NULL DEFAULT NULL,
@@ -117,7 +117,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`ember` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `név` VARCHAR(45) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
   PRIMARY KEY (`id`))
@@ -209,7 +209,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`szezon` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11) auto_increment NOT NULL,
   `szezon` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -236,6 +236,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+#insert into felhasználó()
+
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
