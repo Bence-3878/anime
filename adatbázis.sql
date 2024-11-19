@@ -1,5 +1,5 @@
 -- MySQL Workbench Synchronization
--- Generated: 2024-11-14 17:38
+-- Generated: 2024-11-19 13:31
 -- Model: New Model
 -- Version: 1.0
 -- Project: Name of the project
@@ -9,10 +9,8 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-CREATE SCHEMA IF NOT EXISTS `hazi` DEFAULT CHARACTER SET utf8 ;
-
 CREATE TABLE IF NOT EXISTS `hazi`.`felhasználó` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `felhasználó_név` VARCHAR(12) NOT NULL,
   `jogosultság` ENUM('admin', 'editor', 'user') NOT NULL DEFAULT 'user',
   PRIMARY KEY (`id`),
@@ -21,10 +19,10 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Anime` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `elözmény_id` INT(11) NULL DEFAULT NULL,
   `folytatás_id` INT(11) NULL DEFAULT NULL,
-  `szezon_id` INT(11) NOT NULL,
+  `szezon_id` INT(11) NULL DEFAULT NULL,
   `romanji cim` VARCHAR(120) NOT NULL,
   `angol cím` VARCHAR(120) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
@@ -58,7 +56,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Studió` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `név` VARCHAR(45) NOT NULL,
   `alapitás` DATE NOT NULL,
   PRIMARY KEY (`id`))
@@ -66,8 +64,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Anime_lista` (
-  `felhasználó_id` INT(11) NULL DEFAULT NULL,
-  `Anime_id` INT(11) NULL DEFAULT NULL,
+  `felhasználó_id` INT(11) NOT NULL,
+  `Anime_id` INT(11) NOT NULL,
   `status` ENUM('néz', 'befejezet', 'tervezet', 'drop') NULL DEFAULT 'néz',
   `hol_tart` INT(11) NULL DEFAULT NULL,
   `értékeél` INT(11) NULL DEFAULT NULL,
@@ -88,8 +86,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Anime_has_Studió` (
-  `Anime_id` INT(11) NULL DEFAULT NULL,
-  `Studió_id` INT(11) NULL DEFAULT NULL,
+  `Anime_id` INT(11) NOT NULL,
+  `Studió_id` INT(11) NOT NULL,
   PRIMARY KEY (`Anime_id`, `Studió_id`),
   INDEX `fk_Anime_has_Studió_Studió1_idx` (`Studió_id` ASC) VISIBLE,
   INDEX `fk_Anime_has_Studió_Anime1_idx` (`Anime_id` ASC) VISIBLE,
@@ -107,17 +105,15 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`Karakter` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `név` VARCHAR(45) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
-  `kor` INT(11) NULL DEFAULT NULL,
-  `magaság` INT(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`ember` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `név` VARCHAR(45) NOT NULL,
   `leírás` TEXT(2000) NOT NULL,
   PRIMARY KEY (`id`))
@@ -127,8 +123,8 @@ DEFAULT CHARACTER SET = utf8;
 CREATE TABLE IF NOT EXISTS `hazi`.`szerep` (
   `Anime_id` INT(11) NOT NULL,
   `Karakter_id` INT(11) NOT NULL,
-  `szinkron_szinés_id` INT(11) NULL DEFAULT NULL,
-  `nyelv` VARCHAR(15) NULL DEFAULT NULL,
+  `szinkron_szinés_id` INT(11) NOT NULL,
+  `nyelv` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`Anime_id`, `Karakter_id`, `szinkron_szinés_id`),
   INDEX `fk_Anime_has_Karakter_Karakter1_idx` (`Karakter_id` ASC) VISIBLE,
   INDEX `fk_Anime_has_Karakter_Anime1_idx` (`Anime_id` ASC) VISIBLE,
@@ -152,8 +148,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_karakter` (
-  `felhasználó_id` INT(11) NULL DEFAULT NULL,
-  `Karakter_id` INT(11) NULL DEFAULT NULL,
+  `felhasználó_id` INT(11) NOT NULL,
+  `Karakter_id` INT(11) NOT NULL,
   PRIMARY KEY (`felhasználó_id`, `Karakter_id`),
   INDEX `fk_felhasználó_has_Karakter_Karakter1_idx` (`Karakter_id` ASC) VISIBLE,
   INDEX `fk_felhasználó_has_Karakter_felhasználó1_idx` (`felhasználó_id` ASC) VISIBLE,
@@ -171,8 +167,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_szinés` (
-  `felhasználó_id` INT(11) NULL DEFAULT NULL,
-  `szinkron_szinés_id` INT(11) NULL DEFAULT NULL,
+  `felhasználó_id` INT(11) NOT NULL,
+  `szinkron_szinés_id` INT(11) NOT NULL,
   PRIMARY KEY (`felhasználó_id`, `szinkron_szinés_id`),
   INDEX `fk_felhasználó_has_szinkron_szinés_szinkron_szinés1_idx` (`szinkron_szinés_id` ASC) VISIBLE,
   INDEX `fk_felhasználó_has_szinkron_szinés_felhasználó1_idx` (`felhasználó_id` ASC) VISIBLE,
@@ -189,27 +185,8 @@ CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_szinés` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_anime` (
-  `felhasználó_id` INT(11) NULL DEFAULT NULL,
-  `Anime_id` INT(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`felhasználó_id`, `Anime_id`),
-  INDEX `fk_felhasználó_has_Anime_Anime2_idx` (`Anime_id` ASC) VISIBLE,
-  INDEX `fk_felhasználó_has_Anime_felhasználó2_idx` (`felhasználó_id` ASC) VISIBLE,
-  CONSTRAINT `fk_felhasználó_has_Anime_felhasználó2`
-    FOREIGN KEY (`felhasználó_id`)
-    REFERENCES `hazi`.`felhasználó` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_felhasználó_has_Anime_Anime2`
-    FOREIGN KEY (`Anime_id`)
-    REFERENCES `hazi`.`Anime` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
 CREATE TABLE IF NOT EXISTS `hazi`.`szezon` (
-  `id` INT(11) auto_increment NOT NULL,
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `szezon` VARCHAR(11) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
@@ -236,8 +213,6 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
-#insert into felhasználó()
-
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
