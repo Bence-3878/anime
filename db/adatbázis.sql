@@ -127,3 +127,16 @@ CREATE TABLE IF NOT EXISTS `hazi`.`kedvenc_szinész`
         FOREIGN KEY (`szinkron_szinész_id`) REFERENCES `hazi`.`szemely` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8;
+
+CREATE TABLE IF NOT EXISTS `hazi`.`episodes`
+(
+    `id`         INT(11)      NOT NULL AUTO_INCREMENT,
+    `anime_id`   INT(11)      NOT NULL,
+    `episode_number` INT(11)  NOT NULL,
+    `title`      VARCHAR(255) NOT NULL,
+    `duration`   TIME         NOT NULL,
+    `air_date`   DATE         DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`anime_id`) REFERENCES `hazi`.`anime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8;
