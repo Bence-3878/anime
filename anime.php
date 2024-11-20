@@ -16,11 +16,12 @@ try{
 }catch(PDOException $e){
     die($e->getMessage());
 }
-$sql = "SELECT * FROM Anime WHERE id=$id";
+$sql = "SELECT * FROM Anime WHERE id=1";
 $result = $db->query($sql);
 if($result->rowCount()!=1){
 http_response_code(404);
 exit("$id nincs ilyen id");
+unset($db);
 }
 ?>
 <!DOCTYPE html>
