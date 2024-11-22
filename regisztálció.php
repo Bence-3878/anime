@@ -27,7 +27,7 @@ if (!empty($_POST)) {
         $jelszo = $_POST["jelszo"];
         $hash = password_hash($jelszo, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO felhasználó (felhasználó_név, jelszó) VALUES (:felhasznalonev, :jelszo)";
+        $sql = "INSERT INTO felhasznalo (felhasznalo_nev, jelszo) VALUES (:felhasznalonev, :jelszo)";
         $stmt = $pdo->prepare($sql);
 
         // Paraméterek kötése és végrehajtása
