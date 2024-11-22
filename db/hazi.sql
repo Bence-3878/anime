@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gép: 127.0.0.1
--- Létrehozás ideje: 2024. Nov 22. 18:13
+-- Létrehozás ideje: 2024. Nov 22. 19:49
 -- Kiszolgáló verziója: 10.4.32-MariaDB
 -- PHP verzió: 8.2.12
 
@@ -58,10 +58,18 @@ INSERT INTO `anime` (`id`, `elozmeny_id`, `folytatas_id`, `szezon_id`, `romanji_
 -- Tábla szerkezet ehhez a táblához `anime_has_studio`
 --
 
-CREATE TABLE `anime_has_studio` (
+CREATE TABLE anime_studio (
   `anime_id` int(11) NOT NULL,
   `studio_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `anime_has_studio`
+--
+
+INSERT INTO anime_studio (`anime_id`, `studio_id`) VALUES
+(1, 1),
+(2, 1);
 
 -- --------------------------------------------------------
 
@@ -89,8 +97,27 @@ CREATE TABLE `episodes` (
   `episode_number` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `duration` time NOT NULL,
-  `air_date` date DEFAULT NULL
+  `air_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `episodes`
+--
+
+INSERT INTO `episodes` (`id`, `anime_id`, `episode_number`, `title`, `duration`, `air_date`) VALUES
+(1, 1, 1, 'Jobless Reincarnation', '00:23:00', '2021-01-11'),
+(2, 1, 2, 'Master', '00:23:00', '2021-01-18'),
+(3, 1, 3, 'Friend', '00:23:00', '2021-01-25'),
+(4, 1, 4, 'Emergency Family Meeting', '00:23:00', '2021-02-01'),
+(5, 1, 5, 'A Young Lady and Violence', '00:23:00', '2021-02-08'),
+(6, 1, 6, 'A Day Off in Roa', '00:23:00', '2021-02-15'),
+(7, 1, 7, 'What Lies Beyond Effort', '00:23:00', '2021-02-22'),
+(8, 1, 8, 'Turning Point 1', '00:23:00', '2021-03-01'),
+(9, 1, 9, 'Encounter', '00:23:00', '2021-03-08'),
+(10, 1, 10, 'The Value of a Life and the First Job', '00:23:00', '2021-03-15'),
+(11, 1, 11, 'Children and Warriors', '00:23:00', '2021-03-22'),
+(12, 2, 1, 'The Woman with the Demon Eyes', '00:23:00', '2021-10-04'),
+(13, 2, 2, 'Missed Connections', '00:23:00', '2021-10-11');
 
 -- --------------------------------------------------------
 
@@ -177,8 +204,16 @@ CREATE TABLE `stab` (
 CREATE TABLE `studio` (
   `id` int(11) NOT NULL,
   `nev` varchar(45) NOT NULL,
-  `alapitas` date NOT NULL
+  `alapitas` date NOT NULL,
+  `logo` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `studio`
+--
+
+INSERT INTO `studio` (`id`, `nev`, `alapitas`, `logo`) VALUES
+(1, 'Studio Bind', '2018-11-01', 'https://cdn.myanimelist.net/s/common/company_logos/17557685-c55a-4aa3-9990-a13667e7c1b5_600x600_i?s=c81759de42fc570ba43e173dff286257');
 
 -- --------------------------------------------------------
 
@@ -189,9 +224,17 @@ CREATE TABLE `studio` (
 CREATE TABLE `szemely` (
   `id` int(11) NOT NULL,
   `nev` varchar(45) NOT NULL,
-  `szuletes_datum` datetime DEFAULT NULL,
+  `szuletes_datum` date DEFAULT NULL,
   `kep` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `szemely`
+--
+
+INSERT INTO `szemely` (`id`, `nev`, `szuletes_datum`, `kep`) VALUES
+(1, 'Uchiyama, Yumi', '1987-10-30', 'https://cdn.myanimelist.net/images/voiceactors/1/67838.jpg'),
+(2, 'Sugita, Tomokazu', '1980-10-11', 'https://cdn.myanimelist.net/images/voiceactors/1/81054.jpg');
 
 -- --------------------------------------------------------
 
@@ -205,6 +248,16 @@ CREATE TABLE `szerep` (
   `szinkron_szinész_id` int(11) NOT NULL,
   `nyelv` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- A tábla adatainak kiíratása `szerep`
+--
+
+INSERT INTO `szerep` (`anime_id`, `karakter_id`, `szinkron_szinész_id`, `nyelv`) VALUES
+(1, 1, 1, 'Japán'),
+(1, 1, 2, 'Japán'),
+(2, 1, 1, 'Japán'),
+(2, 1, 2, 'Japán');
 
 -- --------------------------------------------------------
 
@@ -522,7 +575,7 @@ ALTER TABLE `anime`
 --
 -- A tábla indexei `anime_has_studio`
 --
-ALTER TABLE `anime_has_studio`
+ALTER TABLE anime_studio
   ADD PRIMARY KEY (`anime_id`,`studio_id`),
   ADD KEY `fk_anime_has_studio_studio1` (`studio_id`);
 
@@ -614,7 +667,7 @@ ALTER TABLE `anime`
 -- AUTO_INCREMENT a táblához `episodes`
 --
 ALTER TABLE `episodes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT a táblához `felhasznalo`
@@ -632,13 +685,13 @@ ALTER TABLE `karakter`
 -- AUTO_INCREMENT a táblához `studio`
 --
 ALTER TABLE `studio`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT a táblához `szemely`
 --
 ALTER TABLE `szemely`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `szezon`
@@ -661,7 +714,7 @@ ALTER TABLE `anime`
 --
 -- Megkötések a táblához `anime_has_studio`
 --
-ALTER TABLE `anime_has_studio`
+ALTER TABLE anime_studio
   ADD CONSTRAINT `fk_anime_has_studio_anime1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`),
   ADD CONSTRAINT `fk_anime_has_studio_studio1` FOREIGN KEY (`studio_id`) REFERENCES `studio` (`id`);
 
