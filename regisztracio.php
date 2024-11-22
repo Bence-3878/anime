@@ -57,15 +57,15 @@ if (!empty($_POST)) {
 <head>
     <meta charset="UTF-8">
     <title>Regisztárció</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <div class="container">
     <header class="row">
         <a class="menu" href="index.php">Kezdőlap</a>
-        <a class="menu" href="sezon.html">Szezon</a>
-        <a class="menu" href="kereso.html">Kereső</a>
-        <a class="menu" href="bejelentkezés.html">Bejelentkezés</a>
-        <a class="menu" href="regisztálció.html">Regisztráció</a>
+        <a class="menu" href="szezon.php">Szezon</a>
+        <a class="menu" href="kereso.php">Kereső</a>
+        <a class="menu" href="regisztracio.php">Regisztráció</a>
     </header>
     <main class="regist">
         <form method="post">
