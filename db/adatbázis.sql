@@ -172,7 +172,8 @@ CREATE TABLE IF NOT EXISTS `hazi`.`episodes`
 
 CREATE TABLE IF NOT EXISTS `hazi`.`szezon` (
     `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `szezon` VARCHAR(11) NOT NULL,
+    `szezon` VARCHAR(6) NOT NULL,
+    `ev` INT,
     PRIMARY KEY (`id`))
     ENGINE = InnoDB
     DEFAULT CHARACTER SET = utf8;
