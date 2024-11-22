@@ -16,18 +16,15 @@ try{
 }catch(PDOException $e){
     die($e->getMessage());
 }
-$sql = "SELECT * FROM Anime WHERE id = :id";
+$sql = "SELECT * FROM anime WHERE id = :id";
 $stmt = $db->prepare($sql);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if($result->rowCount()!=1){
-http_response_code(404);
-    if (!$result) {
-        http_response_code(404);
-        exit("$id nincs ilyen id");
-    }
+if(!$result){
+    http_response_code(404);
+    exit("$id nincs ilyen id");
 
 }
 ?>
@@ -37,15 +34,16 @@ http_response_code(404);
 <head>
     <meta charset="UTF-8">
     <title><?= htmlspecialchars($result['romanji_cim']); ?></title>
+    <link rel="icon" href="képek/ikon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 <header>
     <nav>
-        <a class="menu" href="index.html">Kezdőlap</a>
-        <a class="menu" href="sezon.html">Szezon</a>
-        <a class="menu" href="kereso.html">Kereső</a>
-        <a class="menu" href="bejelentkezes.html">Bejelentkezés</a>
+        <a class="menu" href="index.php">Kezdőlap</a>
+        <a class="menu" href="szezon.php">Szezon</a>
+        <a class="menu" href="kereso.php">Kereső</a>
         <a class="menu" href="regisztracio.php">Regisztráció</a>
     </nav>
 </header>
@@ -54,7 +52,28 @@ http_response_code(404);
     <section class="anime-profile">
         <h1><?= htmlspecialchars($result['romanji_cim']); ?></h1>
         <h2><?= htmlspecialchars($result['angol_cim']); ?></h2>
+        <?php if (isset($result['poszter'], $result['romanji_cim'])): ?>
+            <img src="<?= htmlspecialchars($result['poszter'], ENT_QUOTES, 'UTF-8'); ?>"
+                 alt="<?= htmlspecialchars($result['romanji_cim'], ENT_QUOTES, 'UTF-8'); ?>">
+        <?php endif; ?>
         <p><?= htmlspecialchars($result['leiras']); ?></p>
+        <a href="anime.php?id=<?= htmlspecialchars($result['folytatas_id']); ?>" >
+            <?php
+            $sqlNext = "SELECT romanji_cim FROM anime WHERE id = :id";
+            $stmtNext = $db->prepare($sqlNext);
+            $stmtNext->bindParam(':id', $result['folytatas_id'], PDO::PARAM_INT);
+            $stmtNext->execute();
+            echo htmlspecialchars($stmtNext->fetchColumn());
+            ?></a>
+        <a href="anime.php?id=<?= htmlspecialchars($result['elozmeny_id']); ?>" >
+            <?php
+            $sqlPrev = "SELECT romanji_cim FROM anime WHERE id = :id";
+            $stmtPrev = $db->prepare($sqlPrev);
+            $stmtPrev->bindParam(':id', $result['elozmeny_id'], PDO::PARAM_INT);
+            $stmtPrev->execute();
+            echo htmlspecialchars($stmtPrev->fetchColumn());
+            ?>
+        </a>
         <h2>Epizódok</h2>
         <ul>
             <?php
