@@ -2,11 +2,18 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: #f5f5f5;
+    background: #1e1e1e;
+    color: #ccc;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
 }
 
 header {
-    background: #333;
+    background: #121212;
     color: #fff;
     padding: 10px 0;
     text-align: center;
@@ -28,8 +35,8 @@ main {
 }
 
 section.anime-profile {
-    background: #fff;
-    border: 1px solid #ddd;
+    background: #2a2a2a;
+    border: 1px solid #3e3e3e;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     max-width: 800px;
@@ -40,17 +47,20 @@ section.anime-profile {
 section.anime-profile h1 {
     font-size: 24px;
     margin-bottom: 10px;
+    color: #fff;
 }
 
 section.anime-profile h2 {
     font-size: 20px;
     margin-bottom: 10px;
+    color: #ddd;
 }
 
 section.anime-profile p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
+    color: #ccc;
 }
 
 section.anime-profile img {
@@ -63,7 +73,7 @@ section.anime-profile img {
 section.anime-profile a {
     display: inline-block;
     margin: 5px 0;
-    color: #007BFF;
+    color: #1e90ff;
     text-decoration: none;
     font-size: 16px;
 }
@@ -78,19 +88,116 @@ section.anime-profile ul {
 }
 
 section.anime-profile ul li {
-    background: #f9f9f9;
-    border: 1px solid #ddd;
+    background: #3e3e3e;
+    border: 1px solid #555;
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 4px;
+    color: #ccc;
 }
 
 footer {
-    background: #333;
+    background: #121212;
     color: #fff;
     text-align: center;
     padding: 10px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+main.regist {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main.login {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main.regist form {
+    display: flex;
+    flex-direction: column;
+}
+
+main.login form {
+    display: flex;
+    flex-direction: column;
+}
+
+main.regist label {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+main.login label {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+main.regist input[type="text"],
+main.regist input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background-color: #3e3e3e;
+    color: #ccc;
+}
+
+main.login input[type="text"],
+main.login input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background-color: #3e3e3e;
+    color: #ccc;
+}
+
+main.regist input[type="submit"] {
+    padding: 10px;
+    color: white;
+    background-color: #444;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+main.regist input[type="submit"] {
+    padding: 10px;
+    color: white;
+    background-color: #444;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+main.regist input[type="submit"]:hover {
+    background-color: #575757;
+}
+
+main.login input[type="submit"]:hover {
+    background-color: #575757;
+}
+
+main.regist input[type="submit"]:focus {
+    outline: none;
+}
+
+main.login input[type="submit"]:focus {
+    outline: none;
+}
+
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 5px;
 }
