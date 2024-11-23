@@ -39,12 +39,18 @@ if(!$result){
 </head>
 
 <body>
-<header>
+<div class="container">
+    <header class="row">
     <nav>
         <a class="menu" href="index.php">Kezdőlap</a>
         <a class="menu" href="szezon.php">Szezon</a>
         <a class="menu" href="kereso.php">Kereső</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+        <a class="menu" href="profil.php">Profil</a>
+        <?php else: ?>
         <a class="menu" href="regisztracio.php">Regisztráció</a>
+        <a class="menu" href="bejelentkezes.php">Bejelenkezés</a>
+        <?php endif; ?>
     </nav>
 </header>
 
@@ -57,6 +63,7 @@ if(!$result){
                  alt="<?= htmlspecialchars($result['romanji_cim'], ENT_QUOTES, 'UTF-8'); ?>">
         <?php endif; ?>
         <p><?= htmlspecialchars($result['leiras']); ?></p>
+        <p> Folytatás:
         <a href="anime.php?id=<?= htmlspecialchars($result['folytatas_id']); ?>" >
             <?php
             $sqlNext = "SELECT romanji_cim FROM anime WHERE id = :id";
@@ -64,7 +71,8 @@ if(!$result){
             $stmtNext->bindParam(':id', $result['folytatas_id'], PDO::PARAM_INT);
             $stmtNext->execute();
             echo htmlspecialchars($stmtNext->fetchColumn());
-            ?></a>
+            ?></a></p><br>
+        <p> Előzmény:
         <a href="anime.php?id=<?= htmlspecialchars($result['elozmeny_id']); ?>" >
             <?php
             $sqlPrev = "SELECT romanji_cim FROM anime WHERE id = :id";
@@ -73,7 +81,7 @@ if(!$result){
             $stmtPrev->execute();
             echo htmlspecialchars($stmtPrev->fetchColumn());
             ?>
-        </a>
+        </a></p>
         <h2>Epizódok</h2>
         <ul>
             <?php
@@ -90,10 +98,6 @@ if(!$result){
         </ul>
     </section>
 </main>
-
-<footer>
-    <p>&copy; 2024 Anime Oldal. Minden jog fenntartva.</p>
-</footer>
+</div>
 </body>
-
 </html>

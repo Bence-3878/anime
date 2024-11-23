@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>kereső</title>
-    <link rel="icon" href="képek/ikon.jpg" type="image/x-icon">
+    <title>Regisztárció</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,6 +20,18 @@
             <?php endif; ?>
         </nav>
     </header>
+    <main class="login">
+        <form action="login.php" method="post">
+
+            <label for="username">Felhasználónév:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Jelszó:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Bejelentkezés">
+        </form>
+    </main>
 </div>
 </body>
 </html>

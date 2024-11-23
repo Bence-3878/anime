@@ -27,6 +27,12 @@ if (!empty($_POST)) {
         $jelszo = $_POST["jelszo"];
         $hash = password_hash($jelszo, PASSWORD_DEFAULT);
 
+        $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = :felhasznalonev";
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(':felhasznalonev', $nev);
+        $stmt->execute();
+        $user = $stmt->fetch();
+        if (!$user){
         $sql = "INSERT INTO felhasznalo (felhasznalo_nev, jelszo) VALUES (:felhasznalonev, :jelszo)";
         $stmt = $pdo->prepare($sql);
 
@@ -36,9 +42,12 @@ if (!empty($_POST)) {
 
         try {
             $stmt->execute();
-            echo "Sikeres regisztráció!";
+            $_SESSION["user_id"] = $pdo->lastInsertId();
+            header("Location: profil.php");
+            exit();
         } catch (PDOException $e) {
             echo "Hiba történt: " . $e->getMessage();
+        }
         }
     } else {
         // Hibák megjelenítése
@@ -46,9 +55,6 @@ if (!empty($_POST)) {
             echo "<p>$error</p>";
         }
     }
-
-    // PDO kapcsolat bezárása
-    unset($pdo);
 }
 ?>
 
@@ -62,12 +68,23 @@ if (!empty($_POST)) {
 <body>
 <div class="container">
     <header class="row">
-        <a class="menu" href="index.php">Kezdőlap</a>
-        <a class="menu" href="szezon.php">Szezon</a>
-        <a class="menu" href="kereso.php">Kereső</a>
-        <a class="menu" href="regisztracio.php">Regisztráció</a>
+        <nav>
+            <a class="menu" href="index.php">Kezdőlap</a>
+            <a class="menu" href="szezon.php">Szezon</a>
+            <a class="menu" href="kereso.php">Kereső</a>
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a class="menu" href="profil.php">Profil</a>
+            <?php else: ?>
+                <a class="menu" href="regisztracio.php">Regisztráció</a>
+                <a class="menu" href="bejelentkezes.php">Bejelenkezés</a>
+            <?php endif; ?>
+        </nav>
     </header>
     <main class="regist">
+        <?php if (isset($user)):
+            if($user):?>
+        <div class="error">A felhasználó név már foglalt!</div>
+        <?php endif;endif ?>
         <form method="post">
             <label for="nev">Felhasználó név</label>
             <input type="text" name="nev" id="nev" required>
