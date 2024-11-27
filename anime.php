@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(empty($_GET['id'])){
     http_response_code(400);
     exit("400 nincs ilyen id");
