@@ -6,6 +6,11 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: bejelentkezes.php');
 }
 
+if (isset($_POST['kijelentkezes']) && isset($_SESSION['user_id'])) {
+    $_SESSION = array();
+    session_destroy();
+    header('Location: index.php');
+}
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];
 
@@ -34,7 +39,9 @@ $errors = array();
             <?php endif; ?>
         </nav>
     </header>
-
+    <form action="profil.php" method="post">
+        <input type="submit" class="kijelenkezes" name="kijelentkezes" value="kijelentkezes">
+    </form>
 </div>
 </body>
 </html>
