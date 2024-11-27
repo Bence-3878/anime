@@ -1,14 +1,22 @@
 <?php
+
+session_start();
+
+if (isset($_SESSION['user_id'])) {
+    header("Location: profil.php");
+    exit();
+}
+
 $errors = array();
 
 if (!empty($_POST)) {
     // Kapcsolódás az adatbázishoz
     $dsn = 'mysql:host=localhost;dbname=hazi';
-    $username = 'root';
-    $password = '';
+    $sqlusername = 'root';
+    $sqlpassword = '';
 
     try {
-        $pdo = new PDO($dsn, $username, $password);
+        $pdo = new PDO($dsn, $sqlusername, $sqlpassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         http_response_code(500);
@@ -23,31 +31,31 @@ if (!empty($_POST)) {
     }
 
     if (empty($errors)) {
-        $nev = $_POST["nev"];
-        $jelszo = $_POST["jelszo"];
-        $hash = password_hash($jelszo, PASSWORD_DEFAULT);
+        $username = $_POST["nev"];
+        $password = $_POST["jelszo"];
+        $hash = password_hash($password, PASSWORD_DEFAULT);
 
         $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = :felhasznalonev";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':felhasznalonev', $nev);
+        $stmt->bindParam(':felhasznalonev', $username);
         $stmt->execute();
         $user = $stmt->fetch();
         if (!$user){
-        $sql = "INSERT INTO felhasznalo (felhasznalo_nev, jelszo) VALUES (:felhasznalonev, :jelszo)";
-        $stmt = $pdo->prepare($sql);
+            $sql = "INSERT INTO felhasznalo (felhasznalo_nev, jelszo) VALUES (:felhasznalonev, :jelszo)";
+            $stmt = $pdo->prepare($sql);
 
-        // Paraméterek kötése és végrehajtása
-        $stmt->bindParam(':felhasznalonev', $nev);
-        $stmt->bindParam(':jelszo', $hash);
+            // Paraméterek kötése és végrehajtása
+            $stmt->bindParam(':felhasznalonev', $username);
+            $stmt->bindParam(':jelszo', $hash);
 
-        try {
-            $stmt->execute();
-            $_SESSION["user_id"] = $pdo->lastInsertId();
-            header("Location: profil.php");
-            exit();
-        } catch (PDOException $e) {
-            echo "Hiba történt: " . $e->getMessage();
-        }
+            try {
+                $stmt->execute();
+                $_SESSION["user_id"] = $pdo->lastInsertId();
+                header("Location: profil.php");
+                exit();
+            } catch (PDOException $e) {
+                echo "Hiba történt: " . $e->getMessage();
+            }
         }
     } else {
         // Hibák megjelenítése
