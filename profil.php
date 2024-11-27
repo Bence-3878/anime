@@ -10,6 +10,7 @@ if (isset($_POST['kijelentkezes']) && isset($_SESSION['user_id'])) {
     $_SESSION = array();
     session_destroy();
     header('Location: index.php');
+    exit();
 }
 $user_id = $_SESSION['user_id'];
 $user_name = $_SESSION['user_name'];

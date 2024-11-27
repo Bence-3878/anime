@@ -1,8 +1,85 @@
+<?php
+session_start();
+
+// Ha a felhasználó már bejelentkezett, átirányítjuk a profil oldalra
+if (isset($_SESSION['user_id'])) {
+    header("Location: profil.php");
+    exit();
+}
+
+$errors = array();
+
+// A bejelentkezési űrlap kezelése
+if (!empty($_POST)) {
+    // Kapcsolódás az adatbázishoz
+    $dsn = 'mysql:host=localhost;dbname=hazi';
+    $sqlusername = 'root';
+    $sqlpassword = '';
+
+    try {
+        $pdo = new PDO($dsn, $sqlusername, $sqlpassword);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        http_response_code(500);
+        die('Sikertelen kapcsolódás: ' . $e->getMessage());
+    }
+
+    if (empty($_POST["username"])) {
+        $errors["username"] = "név megadása kötelező";
+    }
+    if (empty($_POST["password"])) {
+        $errors["password"] = "jelszó megadása kötelező";
+    }
+
+    if (empty($errors['username']) && empty($errors['password'])) {
+        try {
+            $username = $_POST['username'];
+            $password = $_POST['password'];
+
+
+            // Felhasználó keresése az adatbázisban
+            $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = :felhasznalonev";
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':felhasznalonev', $username);
+            if (!$stmt->execute()) {
+                throw new Exception('Hiba a SQL végrehajtása közben.');
+            }
+            $stmt->setFetchMode(PDO::FETCH_OBJ);
+
+            $user = $stmt->fetch();
+
+            if ($user) {
+                // Jelszó ellenőrzése
+                if (password_verify($password, $user->jelszo)) {
+                    // Sikeres bejelentkezés
+                    $_SESSION['user_id'] = $user->id;
+                    $_SESSION['user_name'] = $user->felhasznalo_nev;
+                    $_SESSION['jog'] = $user->jogosultsag;
+                    header("Location: profil.php");
+                    exit();
+                } else {
+                    // Helytelen jelszó
+                    $errors['password'] = "Helytelen felhasználónév vagy jelszó.";
+                }
+            } else {
+                // Felhasználó nem található
+                $errors['username'] = "Helytelen felhasználónév vagy jelszó.";
+            }
+
+        } catch (Exception $e) {
+            $errors['error'] = 'Hiba történt: ' . $e->getMessage();
+        } finally {
+            $pdo = null; // PDO kapcsolat törlése
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Regisztárció</title>
+    <title>Bejelentkezés</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,14 +98,25 @@
         </nav>
     </header>
     <main class="login">
-        <form action="login.php" method="post">
-
+        <form action="bejelentkezes.php" method="post">
             <label for="username">Felhasználónév:</label>
-            <input type="text" id="username" name="username" required>
-
+            <?php if (!empty($errors['username'])): ?>
+                <span class="error"> <?= $errors['username'] ?></span>
+            <?php endif; ?>
+            <?php if (!empty($_POST['username'])): ?>
+                <input type="text" id="username" name="username" value="<?=$_POST['username']?>" required>
+            <?php else: ?>
+                <input type="text" id="username" name="username" required>
+            <?php endif; ?>
             <label for="password">Jelszó:</label>
-            <input type="password" id="password" name="password" required>
-
+            <?php if (!empty($errors['password'])): ?>
+                <span class="error"> <?= $errors['password'] ?></span>
+            <?php endif; ?>
+            <?php if (!empty($_POST['password'])): ?>
+                <input type="password" id="password" name="password" value="<?=$_POST['password']?>" required>
+            <?php else: ?>
+                <input type="password" id="password" name="password" required>
+            <?php endif; ?>
             <input type="submit" value="Bejelentkezés">
         </form>
     </main>
