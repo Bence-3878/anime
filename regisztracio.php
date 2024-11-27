@@ -51,6 +51,7 @@ if (!empty($_POST)) {
             try {
                 $stmt->execute();
                 $_SESSION["user_id"] = $pdo->lastInsertId();
+                $_SESSION["user_name"] = $username;
                 header("Location: profil.php");
                 exit();
             } catch (PDOException $e) {

@@ -1,11 +1,22 @@
 <?php
+
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: bejelentkezes.php');
+}
+
+$user_id = $_SESSION['user_id'];
+$user_name = $_SESSION['user_name'];
+
+
+$errors = array();
 ?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title></title>
+    <title><?=$user_name?></title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
