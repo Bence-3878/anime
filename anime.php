@@ -11,14 +11,17 @@ else {
         exit("400 nincs ilyen id");
     }
 }
+$dsn = 'mysql:host=localhost;dbname=hazi;charset=utf8';
+$sqlusername = 'root';
+$sqlpassword = '';
 try{
-    $db = new PDO('mysql:host=localhost;dbname=hazi;charset=utf8','root','');
-    $db->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+    $pdo = new PDO($dsn, $sqlusername, $sqlpassword);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 }catch(PDOException $e){
     die($e->getMessage());
 }
 $sql = "SELECT * FROM anime WHERE id = :id";
-$stmt = $db->prepare($sql);
+$stmt = $pdo->prepare($sql);
 $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -68,7 +71,7 @@ if(!$result){
         <a href="anime.php?id=<?= htmlspecialchars($result['folytatas_id']); ?>" >
             <?php
             $sqlNext = "SELECT romanji_cim FROM anime WHERE id = :id";
-            $stmtNext = $db->prepare($sqlNext);
+            $stmtNext = $pdo->prepare($sqlNext);
             $stmtNext->bindParam(':id', $result['folytatas_id'], PDO::PARAM_INT);
             $stmtNext->execute();
             echo htmlspecialchars($stmtNext->fetchColumn());
@@ -77,7 +80,7 @@ if(!$result){
         <a href="anime.php?id=<?= htmlspecialchars($result['elozmeny_id']); ?>" >
             <?php
             $sqlPrev = "SELECT romanji_cim FROM anime WHERE id = :id";
-            $stmtPrev = $db->prepare($sqlPrev);
+            $stmtPrev = $pdo->prepare($sqlPrev);
             $stmtPrev->bindParam(':id', $result['elozmeny_id'], PDO::PARAM_INT);
             $stmtPrev->execute();
             echo htmlspecialchars($stmtPrev->fetchColumn());
@@ -87,7 +90,7 @@ if(!$result){
         <ul>
             <?php
             $sqlEpisodes = "SELECT * FROM episodes WHERE anime_id = :id ORDER BY episode_number";
-            $stmtEpisodes = $db->prepare($sqlEpisodes);
+            $stmtEpisodes = $pdo->prepare($sqlEpisodes);
             $stmtEpisodes->bindParam(':id', $id, PDO::PARAM_INT);
             $stmtEpisodes->execute();
             $episodes = $stmtEpisodes->fetchAll(PDO::FETCH_ASSOC);

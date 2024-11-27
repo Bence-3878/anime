@@ -12,7 +12,7 @@ $errors = array();
 // A bejelentkezési űrlap kezelése
 if (!empty($_POST)) {
     // Kapcsolódás az adatbázishoz
-    $dsn = 'mysql:host=localhost;dbname=hazi';
+    $dsn = 'mysql:host=localhost;dbname=hazi;charset=utf8';
     $sqlusername = 'root';
     $sqlpassword = '';
 
