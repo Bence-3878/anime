@@ -450,3 +450,7 @@ form input[type="submit"]:focus {
     outline: none;
     background-color: #1e90ff;
 }
+
+.error{
+    color: red;
+}

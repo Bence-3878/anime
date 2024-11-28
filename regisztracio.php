@@ -23,12 +23,17 @@ if (!empty($_POST)) {
         die('Sikertelen kapcsolódás: ' . $e->getMessage());
     }
 
-    if (empty($_POST["nev"])) {
+    if (empty($_POST["nev"]))
         $errors["nev"] = "név megadása kötelező";
-    }
-    if (empty($_POST["jelszo"])) {
+
+    if (empty($_POST["jelszo"]))
         $errors["jelszo"] = "jelszó megadása kötelező";
-    }
+
+    if (empty($_POST["jelszo_2"]))
+        $errors["jelszo_2"] = "jelszó megadása kötelező";
+
+    if ($_POST["jelszo"] != $_POST["jelszo_2"])
+        $errors["jelszo"] = "a jelszavak nem egyeznek";
 
     if (empty($errors)) {
         $username = $_POST["nev"];
@@ -52,16 +57,12 @@ if (!empty($_POST)) {
                 $stmt->execute();
                 $_SESSION["user_id"] = $pdo->lastInsertId();
                 $_SESSION["user_name"] = $username;
+                $_SESSION["jog"] = 'user';
                 header("Location: profil.php");
                 exit();
             } catch (PDOException $e) {
                 echo "Hiba történt: " . $e->getMessage();
             }
-        }
-    } else {
-        // Hibák megjelenítése
-        foreach ($errors as $error) {
-            echo "<p>$error</p>";
         }
     }
 }
@@ -93,9 +94,21 @@ if (!empty($_POST)) {
         <form method="post">
             <label for="nev">Felhasználó név</label>
             <input type="text" name="nev" id="nev" required>
+            <?php if (isset($errors["nev"])): ?>
+            <div class="error"><?php echo $errors["nev"]; ?></div>
+            <?php endif; ?>
 
             <label for="jelszo">Jelszó</label>
             <input type="password" name="jelszo" id="jelszo" required>
+            <?php if (isset($errors["jelszo"])): ?>
+            <div class="error"><?php echo $errors["jelszo"]; ?></div>
+            <?php endif; ?>
+
+            <label for="jelszo">Jelszó még egyszer</label>
+            <input type="password" name="jelszo_2" id="jelszo_2" required>
+            <?php if (isset($errors["jelszo_2"])): ?>
+            <div class="error"><?php echo $errors["jelszo_2"]; ?></div>
+            <?php endif; ?>
 
             <input type="submit" value="Regisztrálok" >
         </form>
