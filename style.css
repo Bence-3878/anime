@@ -314,3 +314,93 @@ main.login input[type="submit"]:focus {
 .row .column {
     margin: 0 10px;
 }
+
+/* Fő tartalom és lista stílusa */
+main.row {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto; /* Középre igazítja a tartalmát */
+    padding: 20px;
+    text-align: left; /* Balra igazítja a szöveget */
+}
+
+main.row h1 {
+    font-size: 28px;
+    color: #fff;
+    margin-bottom: 20px;
+    text-align: center; /* Főcím középre igazítása */
+}
+
+/* Anime lista stílusai */
+.anime-list {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap; /* Tördelés több sorba */
+    gap: 20px; /* Elemek közötti távolság */
+}
+
+.anime-item {
+    background: #2a2a2a;
+    border: 1px solid #3e3e3e;
+    border-radius: 8px;
+    padding: 10px;
+    width: calc(33.333% - 20px); /* Három elem egy sorban */
+    box-sizing: border-box;
+    color: #ccc;
+    text-align: center;
+}
+
+.anime-poszter {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    max-height: 200px; /* Maximális képmagasság */
+    object-fit: cover; /* Kép méretezése a kerethez */
+}
+
+.anime-item a {
+    color: #1e90ff;
+    text-decoration: none;
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+}
+
+.anime-item a:hover {
+    text-decoration: underline;
+}
+
+.anime-item a:focus {
+    outline: none;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 768px) {
+    .anime-item {
+        width: calc(50% - 20px); /* Két elem egy sorban kisebb képernyőkön */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .anime-item {
+        width: 100%; /* Egy elem egy sorban mobil nézetnél */
+    }
+}
+
+#szezon-title {
+    background: #121212;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center; /* Középre igazított szöveg */
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#szezon-title h1 {
+    font-size: 32px; /* Nagyobb betűméret a címhez */
+    color: #fff; /* Fehér szövegszín */
+    margin: 0;
+    font-weight: bold;
+}

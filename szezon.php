@@ -68,11 +68,18 @@ $anime=$stmt->fetchAll();
             </nav>
         </header>
     </div>
+    <div class="container" id="szezon-title">
+        <h1><?=$ev.' '. $szezon?>i szezon</h1>
+    </div>
     <div class="container" id="szezon">
         <main class="row">
+            <ul class="anime-list">
             <?php foreach ($anime as $anime_elem): ?>
-            <?= $anime_elem['romanji_cim'] ?>
+            <li class="anime-item"><img src="<?=$anime_elem['poszter']?>" class="anime-poszter">
+                <a href="anime.php?id=<?=$anime_elem['id']?>"><?=$anime_elem['romanji_cim']?></a>
+            </li>
             <?php endforeach; ?>
+            </ul>
         </main>
     </div>
 </body>
