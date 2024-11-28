@@ -143,61 +143,6 @@ INSERT INTO `felhasznalo` (`id`, `felhasznalo_nev`, `jogosultsag`, `jelszo`) VAL
 -- --------------------------------------------------------
 
 --
--- Tábla szerkezet ehhez a táblához `karakter`
---
-
-CREATE TABLE `karakter` (
-  `id` int(11) NOT NULL,
-  `nev` varchar(45) NOT NULL,
-  `leiras` text NOT NULL,
-  `kep` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `karakter`
---
-
-INSERT INTO `karakter` (`id`, `nev`, `leiras`, `kep`) VALUES
-(1, 'Rudeus Greyrat', 'Rudeus Greyrat is a reincarnated NEET loser who died, but his memories of his past life remained. His current body possesses high affinity for magic, even as a child.', 'https://cdn.myanimelist.net/images/characters/2/423667.jpg'),
-(2, 'Eris Boreas Greyrat', 'She is Rudeus\' older cousin and also his student. When Rudeus was around seven years old, he taught her magic along with math and reading. She is a violent, strong and proud girl and merciless towards anyone who holds negative emotions and intentions against Rudeus.\r\n', 'https://cdn.myanimelist.net/images/characters/14/324594.jpg');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `kedvenc_karakter`
---
-
-CREATE TABLE `kedvenc_karakter` (
-  `felhasznalo_id` int(11) NOT NULL,
-  `karakter_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `kedvenc_szinesz`
---
-
-CREATE TABLE `kedvenc_szinesz` (
-  `felhasznalo_id` int(11) NOT NULL,
-  `szinkron_szinész_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `stab`
---
-
-CREATE TABLE `stab` (
-  `anime_id` int(11) NOT NULL,
-  `szemely_id` int(11) NOT NULL,
-  `pozicio` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Tábla szerkezet ehhez a táblához `studio`
 --
 
@@ -214,50 +159,6 @@ CREATE TABLE `studio` (
 
 INSERT INTO `studio` (`id`, `nev`, `alapitas`, `logo`) VALUES
 (1, 'Studio Bind', '2018-11-01', 'https://cdn.myanimelist.net/s/common/company_logos/17557685-c55a-4aa3-9990-a13667e7c1b5_600x600_i?s=c81759de42fc570ba43e173dff286257');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `szemely`
---
-
-CREATE TABLE `szemely` (
-  `id` int(11) NOT NULL,
-  `nev` varchar(45) NOT NULL,
-  `szuletes_datum` date DEFAULT NULL,
-  `kep` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `szemely`
---
-
-INSERT INTO `szemely` (`id`, `nev`, `szuletes_datum`, `kep`) VALUES
-(1, 'Uchiyama, Yumi', '1987-10-30', 'https://cdn.myanimelist.net/images/voiceactors/1/67838.jpg'),
-(2, 'Sugita, Tomokazu', '1980-10-11', 'https://cdn.myanimelist.net/images/voiceactors/1/81054.jpg');
-
--- --------------------------------------------------------
-
---
--- Tábla szerkezet ehhez a táblához `szerep`
---
-
-CREATE TABLE `szerep` (
-  `anime_id` int(11) NOT NULL,
-  `karakter_id` int(11) NOT NULL,
-  `szinkron_szinész_id` int(11) NOT NULL,
-  `nyelv` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- A tábla adatainak kiíratása `szerep`
---
-
-INSERT INTO `szerep` (`anime_id`, `karakter_id`, `szinkron_szinész_id`, `nyelv`) VALUES
-(1, 1, 1, 'Japán'),
-(1, 1, 2, 'Japán'),
-(2, 1, 1, 'Japán'),
-(2, 1, 2, 'Japán');
 
 -- --------------------------------------------------------
 
@@ -601,51 +502,10 @@ ALTER TABLE `felhasznalo`
   ADD UNIQUE KEY `felhasznalo_nev` (`felhasznalo_nev`);
 
 --
--- A tábla indexei `karakter`
---
-ALTER TABLE `karakter`
-  ADD PRIMARY KEY (`id`);
-
---
--- A tábla indexei `kedvenc_karakter`
---
-ALTER TABLE `kedvenc_karakter`
-  ADD PRIMARY KEY (`felhasznalo_id`,`karakter_id`),
-  ADD KEY `fk_felhasznalo_has_karakter_karakter1` (`karakter_id`);
-
---
--- A tábla indexei `kedvenc_szinesz`
---
-ALTER TABLE `kedvenc_szinesz`
-  ADD PRIMARY KEY (`felhasznalo_id`,`szinkron_szinész_id`),
-  ADD KEY `fk_felhasznalo_has_szinész_szinész1` (`szinkron_szinész_id`);
-
---
--- A tábla indexei `stab`
---
-ALTER TABLE `stab`
-  ADD PRIMARY KEY (`anime_id`,`szemely_id`),
-  ADD KEY `fk_Anime_has_ember_ember1` (`szemely_id`);
-
---
 -- A tábla indexei `studio`
 --
 ALTER TABLE `studio`
   ADD PRIMARY KEY (`id`);
-
---
--- A tábla indexei `szemely`
---
-ALTER TABLE `szemely`
-  ADD PRIMARY KEY (`id`);
-
---
--- A tábla indexei `szerep`
---
-ALTER TABLE `szerep`
-  ADD PRIMARY KEY (`anime_id`,`karakter_id`,`szinkron_szinész_id`),
-  ADD KEY `fk_anime_has_karakter_karakter1` (`karakter_id`),
-  ADD KEY `fk_anime_has_karakter_szinkron_szinész1` (`szinkron_szinész_id`);
 
 --
 -- A tábla indexei `szezon`
@@ -676,22 +536,10 @@ ALTER TABLE `felhasznalo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT a táblához `karakter`
---
-ALTER TABLE `karakter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT a táblához `studio`
 --
 ALTER TABLE `studio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT a táblához `szemely`
---
-ALTER TABLE `szemely`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT a táblához `szezon`
@@ -731,34 +579,6 @@ ALTER TABLE `anime_lista`
 ALTER TABLE `episodes`
   ADD CONSTRAINT `episodes_ibfk_1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
---
--- Megkötések a táblához `kedvenc_karakter`
---
-ALTER TABLE `kedvenc_karakter`
-  ADD CONSTRAINT `fk_felhasznalo_has_karakter_felhasznalo1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalo` (`id`),
-  ADD CONSTRAINT `fk_felhasznalo_has_karakter_karakter1` FOREIGN KEY (`karakter_id`) REFERENCES `karakter` (`id`);
-
---
--- Megkötések a táblához `kedvenc_szinesz`
---
-ALTER TABLE `kedvenc_szinesz`
-  ADD CONSTRAINT `fk_felhasznalo_has_szinész_felhasznalo1` FOREIGN KEY (`felhasznalo_id`) REFERENCES `felhasznalo` (`id`),
-  ADD CONSTRAINT `fk_felhasznalo_has_szinész_szinész1` FOREIGN KEY (`szinkron_szinész_id`) REFERENCES `szemely` (`id`);
-
---
--- Megkötések a táblához `stab`
---
-ALTER TABLE `stab`
-  ADD CONSTRAINT `fk_Anime_has_ember_Anime1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`),
-  ADD CONSTRAINT `fk_Anime_has_ember_ember1` FOREIGN KEY (`szemely_id`) REFERENCES `szemely` (`id`);
-
---
--- Megkötések a táblához `szerep`
---
-ALTER TABLE `szerep`
-  ADD CONSTRAINT `fk_anime_has_karakter_anime1` FOREIGN KEY (`anime_id`) REFERENCES `anime` (`id`),
-  ADD CONSTRAINT `fk_anime_has_karakter_karakter1` FOREIGN KEY (`karakter_id`) REFERENCES `karakter` (`id`),
-  ADD CONSTRAINT `fk_anime_has_karakter_szinkron_szinész1` FOREIGN KEY (`szinkron_szinész_id`) REFERENCES `szemely` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
