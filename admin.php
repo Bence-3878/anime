@@ -1,12 +1,17 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: bejelentkezes.php');
+}
+if ($_SESSION['jog'] != 'admin' && $_SESSION['jog'] != 'editor' ) {
+    header('Location: index.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Nagy Házi</title>
-    <link rel="icon" href="képek/ikon.jpg" type="image/x-icon">
+    <title>Regisztárció</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,16 +32,6 @@ session_start();
             <?php endif; ?>
         </nav>
     </header>
-    <main class="main">
-        <section id="introduction">
-            <h2>Projekt Bemutató</h2>
-            <p>Ez a projekt az egyetem Info 2 tárgyának nagy házi feladata, melynek célja egy dinamikus weboldal
-                készítése PHP segítségével.
-                A házi feladat során különböző webfejlesztési technikákat kell alkalmaznunk, például adatbázis-kezelést,
-                session kezelést és
-                responsív dizájn kialakítását.</p>
-        </section>
-    </main>
 </div>
 </body>
 </html>
