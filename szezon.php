@@ -35,16 +35,12 @@ switch ($honap) {
     case '12':
         $szezon='osz';
 }
-$sql = 'SELECT id FROM szezon WHERE ev=:ev AND szezon=:szezon';
+
+
+$sql = 'SELECT * FROM anime WHERE szezon_id=(SELECT id FROM szezon WHERE ev=:ev AND szezon=:szezon)';
 $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':ev', $ev);
 $stmt->bindParam(':szezon', $szezon);
-$stmt->execute();
-$szezon_id=$stmt->fetchColumn();
-
-$sql = 'SELECT * FROM anime WHERE szezon_id=:id';
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':id', $szezon_id);
 $stmt->execute();
 $anime=$stmt->fetchAll();
 ?>
