@@ -40,6 +40,46 @@ try {
     die('Sikertelen kapcsolódás: ' . $e->getMessage());
 }
 
+$sikeres = false;
+    if(isset($_POST['user_name']) && isset($_POST['jelszo']) && isset($_SESSION['user_id'])
+        && $_SESSION['user_id'] == $user_id){
+        $sqlfelhasznalo = 'UPDATE felhasznalo SET nev = :nev WHERE id = :id';
+        $stmt = $pdo->prepare($sqlfelhasznalo);
+        $stmt->bindParam(':nev', $_POST['user_name']);
+        $stmt->bindParam(':id', $user_id);
+        $stmt->execute();
+        $sikeres = true;
+    }
+
+    if(isset($_POST['regi_jelszo']) && isset($_POST['uj_jelszo'])
+        && isset($_POST['uj_jelszo2']) && isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id){
+        $sqlfelhasznalo = 'SELECT jelszo FROM felhasznalo WHERE id = :id';
+        $stmt = $pdo->prepare($sqlfelhasznalo);
+        $stmt->bindParam(':id', $user_id);
+        $stmt->execute();
+        $jelszo = $stmt->fetchColumn(PDO::FETCH_ASSOC);
+        if(password_verify($_POST['regi_jelszo'], $jelszo)){
+            if($_POST['uj_jelszo'] == $_POST['uj_jelszo2']){
+                $sqlfelhasznalo = 'UPDATE felhasznalo SET jelszo = :jelszo WHERE id = :id';
+                $stmt = $pdo->prepare($sqlfelhasznalo);
+                $jelszo = password_hash($_POST['uj_jelszo'], PASSWORD_DEFAULT);
+                $stmt->bindParam(':jelszo', $jelszo);
+                $stmt->bindParam(':id', $user_id);
+                $stmt->execute();
+                $sikeres = true;
+            }
+        }
+    }
+
+if(isset($_POST['option_selected']) && isset($_SESSION['user_id']) && $_SESSION['jog'] == 'admin'){
+    $sqlfelhasznalo = 'UPDATE felhasznalo SET jogosultsag = :jogosultsag WHERE id = :id';
+    $stmt = $pdo->prepare($sqlfelhasznalo);
+    $stmt->bindParam(':jogosultsag', $_POST['option_selected']);
+    $stmt->bindParam(':id', $user_id);
+    $stmt->execute();
+    $sikeres = true;
+}
+
 if (isset($user_id)) {
     $sqlfelhasznalo = 'SELECT * FROM felhasznalo WHERE id = :id';
     $stmt = $pdo->prepare($sqlfelhasznalo);
@@ -96,13 +136,65 @@ if (isset($user_id)) {
             <h2>Felhasználói adatok</h2>
             <p><strong>Név:</strong> <?= $user_name ?></p>
             <p><strong>Felhasználó ID:</strong> <?= $user_id ?></p>
+            <?php if ($sikeres): ?>
+            <p class="sikeres" >Szikeren modósult</p>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id): ?>
+            <div id="felhasznalo_modositas">
+                <form action="profil.php" method="post">
+                    <h3>Felhasználó név modositás</h3>
+
+                    <label for="user_name">Felhasználó Név</label>
+                    <input type="text" name="user_name" id="user_name" value="<?= $user_name ?>" required>
+
+                    <label for="jelszo">Jelszó</label>
+                    <input type="password" name="jelszo" id="jelszo" required>
+
+                    <input type="submit" class="modosit" value="modosit">
+                </form>
+            </div>
+            <div id="jelszo_modositas">
+                <form action="profil.php" method="post">
+                    <h3>Jelszó modositás</h3>
+
+                    <label for="regi_jelszo">Régi jelszó</label>
+                    <input type="password" name="regi_jelszo" id="regi_jelszo" required>
+
+                    <label for="uj_jelszo">új jelszó</label>
+                    <input type="password" name="uj_jelszo" id="uj_jelszo" required>
+                    <?php if (isset($_POST['regi_jelszo']) && isset($_POST['uj_jelszo'])
+                        && isset($_POST['uj_jelszo2']) && isset($_SESSION['user_id'])
+                        && $_SESSION['user_id'] == $user_id && $_POST['uj_jelszo'] != $_POST['uj_jelszo2']): ?>
+                        <p class="error">A jelszavak nem egyeznek meg!</p>
+                    <?php endif; ?>
+
+                    <label for="uj_jelszo2">Új jelszó még egyszer</label>
+                    <input type="password" name="uj_jelszo2" id="uj_jelszo2" required>
+
+                    <input type="submit" class="modosit" value="modosit">
+                </form>
+            </div>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['jog']) && $_SESSION['jog'] == 'admin'): ?>
+            <form action="profil.php?id=<?=$user_id?>" method="post">
+                <select name="option_selected" id="option_selected" required>
+                <option value="user" <?php if ($user['jogosultsag'] == 'user') echo "disabled selected"?>>User</option>
+                <option value="editor" <?php if ($user['jogosultsag'] == 'editor') echo "disabled selected"?>>Editor</option>
+                <option value="admin" <?php if ($user['jogosultsag'] == 'admin') echo "disabled selected"?>>Admin</option>
+                </select>
+
+                <input type="submit" class="modosit" value="modosit">
+            </form>
+            <?php endif; ?>
+            <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id): ?>
             <form action="profil.php" method="post">
                 <input type="submit" class="kijelenkezes" name="kijelentkezes" value="kijelentkezes">
             </form>
+            <?php endif; ?>
         </aside>
         <main class="content">
             <h2>Felhasználói lista</h2>
-            <!-- Itt adjuk hozzá a felhasználó listáját -->
+
         </main>
     </div>
 </div>
