@@ -69,6 +69,7 @@ if(!$result){
                  alt="<?= htmlspecialchars($result['romanji_cim'], ENT_QUOTES, 'UTF-8'); ?>">
         <?php endif; ?>
         <p><?= htmlspecialchars($result['leiras']); ?></p>
+        <?php if (isset($result['folytatas_id'])): ?>
         <p> Folytatás:
         <a href="anime.php?id=<?= htmlspecialchars($result['folytatas_id']); ?>" >
             <?php
@@ -77,7 +78,9 @@ if(!$result){
             $stmtNext->bindParam(':id', $result['folytatas_id'], PDO::PARAM_INT);
             $stmtNext->execute();
             echo htmlspecialchars($stmtNext->fetchColumn());
-            ?></a></p><br>
+            ?></a></p>
+        <?php endif; ?>
+        <?php if (isset($result['elozmeny_id'])): ?>
         <p> Előzmény:
         <a href="anime.php?id=<?= htmlspecialchars($result['elozmeny_id']); ?>" >
             <?php
@@ -88,20 +91,25 @@ if(!$result){
             echo htmlspecialchars($stmtPrev->fetchColumn());
             ?>
         </a></p>
+        <?php endif; ?>
+        <?php
+        $sqlEpisodes = "SELECT * FROM episodes WHERE anime_id = :id ORDER BY episode_number";
+        $stmtEpisodes = $pdo->prepare($sqlEpisodes);
+        $stmtEpisodes->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmtEpisodes->execute();
+        $episodes = $stmtEpisodes->fetchAll(PDO::FETCH_ASSOC);
+        if($episodes):
+        ?>
         <h2>Epizódok</h2>
         <ul>
             <?php
-            $sqlEpisodes = "SELECT * FROM episodes WHERE anime_id = :id ORDER BY episode_number";
-            $stmtEpisodes = $pdo->prepare($sqlEpisodes);
-            $stmtEpisodes->bindParam(':id', $id, PDO::PARAM_INT);
-            $stmtEpisodes->execute();
-            $episodes = $stmtEpisodes->fetchAll(PDO::FETCH_ASSOC);
             foreach($episodes as $episode) {
                 echo "<li>Epizód " . htmlspecialchars($episode['episode_number']) . ": " . htmlspecialchars($episode['title']) .
                     " (" . htmlspecialchars($episode['duration']) . ") - " . htmlspecialchars($episode['air_date']) . "</li>";
             }
             ?>
         </ul>
+        <?php endif; ?>
     </section>
 </main>
 </div>
