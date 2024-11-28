@@ -58,7 +58,7 @@ session_start();
         $stmt->bindParam(':kereso1', $likeKereso);
         $stmt->bindParam(':kereso2', $likeKereso);
         $stmt->execute();
-        $anime = $stmt->fetchAll();
+        $anime = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     ?>
         <main class="row">

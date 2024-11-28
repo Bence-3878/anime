@@ -42,7 +42,7 @@ $stmt = $pdo->prepare($sql);
 $stmt->bindParam(':ev', $ev);
 $stmt->bindParam(':szezon', $szezon);
 $stmt->execute();
-$anime=$stmt->fetchAll();
+$anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">

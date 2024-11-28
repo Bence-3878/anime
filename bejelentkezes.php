@@ -44,17 +44,16 @@ if (!empty($_POST)) {
             if (!$stmt->execute()) {
                 throw new Exception('Hiba a SQL végrehajtása közben.');
             }
-            $stmt->setFetchMode(PDO::FETCH_OBJ);
 
-            $user = $stmt->fetch();
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
                 // Jelszó ellenőrzése
-                if (password_verify($password, $user->jelszo)) {
+                if (password_verify($password, $user['jelszo'])) {
                     // Sikeres bejelentkezés
-                    $_SESSION['user_id'] = $user->id;
-                    $_SESSION['user_name'] = $user->nev;
-                    $_SESSION['jog'] = $user->jogosultsag;
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['nev'];
+                    $_SESSION['jog'] = $user['jogosultsag'];
                     header("Location: profil.php");
                     exit();
                 } else {

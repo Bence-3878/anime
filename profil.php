@@ -45,25 +45,23 @@ if (isset($user_id)) {
     $stmt = $pdo->prepare($sqlfelhasznalo);
     $stmt->bindParam(':id', $user_id);
     $stmt->execute();
-    $stmt->setFetchMode(PDO::FETCH_OBJ);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!$user){
         http_response_code(404);
         die('felhasználó nem található ilyen id-val');
     }
-    $user_name = $user->nev;
+    $user_name = $user['nev'];
 } elseif (isset($user_name)) {
     $sqlfelhasznalo = 'SELECT * FROM felhasznalo WHERE nev = :nev';
     $stmt = $pdo->prepare($sqlfelhasznalo);
     $stmt->bindParam(':nev', $user_id);
     $stmt->execute();
-    $stmt->setFetchMode(PDO::FETCH_OBJ);
-    $user = $stmt->fetch();
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
     if(!$user){
         http_response_code(404);
         die('felhasználó nem található ilyen névvel');
     }
-    $user_name = $user->id;
+    $user_name = $user['id'];
 }
 
 ?>

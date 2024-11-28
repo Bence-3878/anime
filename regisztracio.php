@@ -39,7 +39,7 @@ if (!empty($_POST)) {
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':nev', $username);
         $stmt->execute();
-        $user = $stmt->fetch();
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
         if (!$user){
             $sql = "INSERT INTO felhasznalo (nev, jelszo) VALUES (:nev, :jelszo)";
             $stmt = $pdo->prepare($sql);
