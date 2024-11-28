@@ -11,36 +11,45 @@ try {
 } catch (PDOException $e) {
     echo 'Hiba: ' . $e->getMessage();
 }
-date_default_timezone_set('Europe/Budapest');
-$ev=date("Y");
-$honap=date("m");
-switch ($honap) {
-    case '01':
-    case '02':
-    case '03':
-        $szezon='tel';
-        break;
-    case '04':
-    case '05':
-    case '06':
-        $szezon='tavasz';
-        break;
-    case '07':
-    case '08':
-    case '09':
-        $szezon='nyar';
-        break;
-    case '10':
-    case '11':
-    case '12':
-        $szezon='osz';
+if (!isset($_GET['id'])) {
+    date_default_timezone_set('Europe/Budapest');
+    $ev = date("Y");
+    $honap = date("m");
+    switch ($honap) {
+        case '01':
+        case '02':
+        case '03':
+            $szezon = 'tel';
+            break;
+        case '04':
+        case '05':
+        case '06':
+            $szezon = 'tavasz';
+            break;
+        case '07':
+        case '08':
+        case '09':
+            $szezon = 'nyar';
+            break;
+        case '10':
+        case '11':
+        case '12':
+            $szezon = 'osz';
+    }
+
+
+    $sql = 'SELECT * FROM anime WHERE szezon_id=(SELECT id FROM szezon WHERE ev=:ev AND szezon=:szezon)';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':ev', $ev);
+    $stmt->bindParam(':szezon', $szezon);
+} else {
+    $id = $_GET['id'];
+    $sql = 'SELECT * FROM anime WHERE szezon_id=:id';
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':id', $id);
+    $ev = $pdo->query('SELECT ev FROM szezon WHERE id=:id')->fetchColumn();
+    $szezon = $pdo->query('SELECT szezon FROM szezon WHERE id=:id')->fetchColumn();
 }
-
-
-$sql = 'SELECT * FROM anime WHERE szezon_id=(SELECT id FROM szezon WHERE ev=:ev AND szezon=:szezon)';
-$stmt = $pdo->prepare($sql);
-$stmt->bindParam(':ev', $ev);
-$stmt->bindParam(':szezon', $szezon);
 $stmt->execute();
 $anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
