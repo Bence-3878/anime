@@ -61,7 +61,9 @@ if(!$result){
 <main>
     <section class="anime-profile">
         <h1><?= htmlspecialchars($result['romanji_cim']); ?></h1>
+        <?php if (isset($result['angol_cim'])): ?>
         <h2><?= htmlspecialchars($result['angol_cim']); ?></h2>
+        <?php endif; ?>
         <?php if (isset($result['poszter'], $result['romanji_cim'])): ?>
             <img src="<?= htmlspecialchars($result['poszter'], ENT_QUOTES, 'UTF-8'); ?>"
                  alt="<?= htmlspecialchars($result['romanji_cim'], ENT_QUOTES, 'UTF-8'); ?>">
