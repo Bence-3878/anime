@@ -201,3 +201,116 @@ main.login input[type="submit"]:focus {
     font-size: 14px;
     margin-top: 5px;
 }
+
+main.login {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+main.login form {
+    display: flex;
+    flex-direction: column;
+}
+
+main.login label {
+    margin-top: 10px;
+    color: #ccc;
+}
+
+main.login input[type="text"],
+main.login input[type="password"] {
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 3px;
+    background-color: #3e3e3e;
+    color: #ccc;
+}
+
+main.login input[type="submit"] {
+    padding: 10px;
+    color: white;
+    background-color: #444;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+main.login input[type="submit"]:hover {
+    background-color: #575757;
+}
+
+main.login input[type="submit"]:focus {
+    outline: none;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+/* Oldalsáv stílusa */
+.sidebar {
+    background: #2a2a2a;
+    border: 1px solid #3e3e3e;
+    border-radius: 8px;
+    padding: 20px;
+    width: 30%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #ccc;
+    box-sizing: border-box;
+}
+
+.sidebar h2 {
+    color: #fff;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.sidebar p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.sidebar .kijelenkezes {
+    padding: 10px;
+    color: white;
+    background-color: #444;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.sidebar .kijelenkezes:hover {
+    background-color: #575757;
+}
+
+/* Fő tartalom stílusa */
+.content {
+    background: #2a2a2a;
+    border: 1px solid #3e3e3e;
+    border-radius: 8px;
+    padding: 20px;
+    width: 65%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    color: #ccc;
+    box-sizing: border-box;
+}
+
+.content h2 {
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.row .column {
+    flex: 1;
+}
+
+.row .column {
+    margin: 0 10px;
+}
