@@ -42,16 +42,25 @@ if (!isset($_GET['id'])) {
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':ev', $ev);
     $stmt->bindParam(':szezon', $szezon);
+    $stmt->execute();
+    $anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
 } else {
     $id = $_GET['id'];
     $sql = 'SELECT * FROM anime WHERE szezon_id=:id';
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':id', $id);
-    $ev = $pdo->query('SELECT ev FROM szezon WHERE id=:id')->fetchColumn();
-    $szezon = $pdo->query('SELECT szezon FROM szezon WHERE id=:id')->fetchColumn();
+    $stmt->execute();
+    $anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    $sqlszezon = 'SELECT * FROM szezon WHERE id=:id';
+    $stmtszezon = $pdo->prepare($sqlszezon);
+    $stmtszezon->bindParam(':id', $id);
+    $stmtszezon->execute();
+    $szezoneredmény = $stmtszezon->fetch(PDO::FETCH_ASSOC);
+    $szezon = $szezoneredmény['szezon'];
+    $ev = $szezoneredmény['ev'];
+
 }
-$stmt->execute();
-$anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,6 +94,7 @@ $anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <div class="container" id="szezon">
         <main class="row">
+            <?php if (isset($anime)): ?>
             <ul class="anime-list">
             <?php foreach ($anime as $anime_elem): ?>
             <li class="anime-item"><img src="<?=$anime_elem['poszter']?>" class="anime-poszter">
@@ -92,6 +102,9 @@ $anime=$stmt->fetchAll(PDO::FETCH_ASSOC);
             </li>
             <?php endforeach; ?>
             </ul>
+            <?php else: ?>
+            <p>Nincsenek animek ebben a szezonban.</p>
+            <?php endif; ?>
         </main>
     </div>
 </body>
