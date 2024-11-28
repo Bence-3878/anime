@@ -7,7 +7,7 @@ CREATE SCHEMA IF NOT EXISTS `hazi` DEFAULT CHARACTER SET utf8 ;
 CREATE TABLE IF NOT EXISTS `hazi`.`felhasznalo`
 (
     `id`              INT(11)                          NOT NULL AUTO_INCREMENT,
-    `felhasznalo_nev` VARCHAR(12)                      NOT NULL UNIQUE,
+    nev VARCHAR(12)                      NOT NULL UNIQUE,
     `jogosultsag`     ENUM ('admin', 'editor', 'user') NOT NULL DEFAULT 'user',
     `jelszo`          CHAR(60)                         NOT NULL,
     PRIMARY KEY (`id`)

@@ -38,9 +38,9 @@ if (!empty($_POST)) {
 
 
             // Felhasználó keresése az adatbázisban
-            $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = :felhasznalonev";
+            $sql = "SELECT * FROM felhasznalo WHERE nev = :nev";
             $stmt = $pdo->prepare($sql);
-            $stmt->bindParam(':felhasznalonev', $username);
+            $stmt->bindParam(':nev', $username);
             if (!$stmt->execute()) {
                 throw new Exception('Hiba a SQL végrehajtása közben.');
             }
@@ -53,7 +53,7 @@ if (!empty($_POST)) {
                 if (password_verify($password, $user->jelszo)) {
                     // Sikeres bejelentkezés
                     $_SESSION['user_id'] = $user->id;
-                    $_SESSION['user_name'] = $user->felhasznalo_nev;
+                    $_SESSION['user_name'] = $user->nev;
                     $_SESSION['jog'] = $user->jogosultsag;
                     header("Location: profil.php");
                     exit();

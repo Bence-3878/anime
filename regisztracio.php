@@ -35,17 +35,17 @@ if (!empty($_POST)) {
         $password = $_POST["jelszo"];
         $hash = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "SELECT * FROM felhasznalo WHERE felhasznalo_nev = :felhasznalonev";
+        $sql = "SELECT * FROM felhasznalo WHERE nev = :nev";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':felhasznalonev', $username);
+        $stmt->bindParam(':nev', $username);
         $stmt->execute();
         $user = $stmt->fetch();
         if (!$user){
-            $sql = "INSERT INTO felhasznalo (felhasznalo_nev, jelszo) VALUES (:felhasznalonev, :jelszo)";
+            $sql = "INSERT INTO felhasznalo (nev, jelszo) VALUES (:nev, :jelszo)";
             $stmt = $pdo->prepare($sql);
 
             // Paraméterek kötése és végrehajtása
-            $stmt->bindParam(':felhasznalonev', $username);
+            $stmt->bindParam(':nev', $username);
             $stmt->bindParam(':jelszo', $hash);
 
             try {
