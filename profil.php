@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['user_id']) && !isset($_GET['id']) && !isset($_GET['name']))
-        header('Location: bejelentkezes.php');
+    header('Location: bejelentkezes.php');
 
 elseif (isset($_POST['kijelentkezes']) && isset($_SESSION['user_id'])) {
     $_SESSION = array();
@@ -45,6 +45,7 @@ if (isset($user_id)) {
     $stmt = $pdo->prepare($sqlfelhasznalo);
     $stmt->bindParam(':id', $user_id);
     $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_OBJ);
     $user = $stmt->fetch();
     if(!$user){
         http_response_code(404);
@@ -56,6 +57,7 @@ if (isset($user_id)) {
     $stmt = $pdo->prepare($sqlfelhasznalo);
     $stmt->bindParam(':nev', $user_id);
     $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_OBJ);
     $user = $stmt->fetch();
     if(!$user){
         http_response_code(404);
