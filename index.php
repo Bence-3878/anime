@@ -1,6 +1,5 @@
 <?php
-session_start();
-?>
+session_start(); ?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
@@ -16,9 +15,12 @@ session_start();
             <a class="menu" href="index.php">Kezdőlap</a>
             <a class="menu" href="szezon.php">Szezon</a>
             <a class="menu" href="kereso.php">Kereső</a>
-            <?php if (isset($_SESSION['user_id'])): ?>
+            <?php if (isset($_SESSION["user_id"])): ?>
                 <a class="menu" href="profil.php">Profil</a>
-                <?php if ($_SESSION['jog'] == 'admin' || $_SESSION['jog'] == 'editor'): ?>
+                <?php if (
+                    $_SESSION["jog"] == "admin" ||
+                    $_SESSION["jog"] == "editor"
+                ): ?>
                     <a class="menu" href="admin.php">Admin</a>
                 <?php endif; ?>
             <?php else: ?>
