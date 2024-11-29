@@ -547,3 +547,114 @@ form input[type="submit"]:focus {
 #jelszo_modositas{
     flex-direction: column;
 }
+
+/* Stílusok a modális ablakhoz */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Alapértelmezett stílusok a modális ablakhoz */
+.modal {
+    display: none; /* Alapértelmezetten rejtve */
+    position: fixed; /* Rögzített pozíció a képernyőn */
+    z-index: 1; /* A további elemeken felül lesz */
+    left: 0;
+    top: 0;
+    width: 100%; /* Teljes szélesség */
+    height: 100%; /* Teljes magasság */
+    overflow: auto; /* Görgetés, ha szükséges */
+    background-color: rgba(0, 0, 0, 0.5); /* Fél átlátszó fekete háttér */
+}
+
+/* A modális tartalom stílusa */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Középső elhelyezkedés */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Szélesség (szükség szerint módosítható) */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px; /* Maximális szélesség */
+}
+
+/* Bezárás gomb */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Cím és egyéb elemek igazítása */
+h3 {
+    margin-top: 0;
+}
+
+label, input {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+.error {
+    color: #ff0000;
+    font-weight: bold;
+}
