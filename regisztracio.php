@@ -2,38 +2,42 @@
 
 session_start();
 
-if (isset($_SESSION['user_id'])) {
+if (isset($_SESSION["user_id"])) {
     header("Location: profil.php");
     exit();
 }
 
-$errors = array();
+$errors = [];
 
 if (!empty($_POST)) {
     // Kapcsolódás az adatbázishoz
-    $dsn = 'mysql:host=localhost;dbname=hazi;charset=utf8';
-    $sqlusername = 'root';
-    $sqlpassword = '';
+    $dsn = "mysql:host=localhost;dbname=hazi;charset=utf8";
+    $sqlusername = "root";
+    $sqlpassword = "";
 
     try {
         $pdo = new PDO($dsn, $sqlusername, $sqlpassword);
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     } catch (PDOException $e) {
         http_response_code(500);
-        die('Sikertelen kapcsolódás: ' . $e->getMessage());
+        die("Sikertelen kapcsolódás: " . $e->getMessage());
     }
 
-    if (empty($_POST["nev"]))
+    if (empty($_POST["nev"])) {
         $errors["nev"] = "név megadása kötelező";
+    }
 
-    if (empty($_POST["jelszo"]))
+    if (empty($_POST["jelszo"])) {
         $errors["jelszo"] = "jelszó megadása kötelező";
+    }
 
-    if (empty($_POST["jelszo_2"]))
+    if (empty($_POST["jelszo_2"])) {
         $errors["jelszo_2"] = "jelszó megadása kötelező";
+    }
 
-    if ($_POST["jelszo"] != $_POST["jelszo_2"])
+    if ($_POST["jelszo"] != $_POST["jelszo_2"]) {
         $errors["jelszo"] = "a jelszavak nem egyeznek";
+    }
 
     if (empty($errors)) {
         $username = $_POST["nev"];
@@ -42,22 +46,23 @@ if (!empty($_POST)) {
 
         $sql = "SELECT * FROM felhasznalo WHERE nev = :nev";
         $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':nev', $username);
+        $stmt->bindParam(":nev", $username);
         $stmt->execute();
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$user){
-            $sql = "INSERT INTO felhasznalo (nev, jelszo) VALUES (:nev, :jelszo)";
+        if (!$user) {
+            $sql =
+                "INSERT INTO felhasznalo (nev, jelszo) VALUES (:nev, :jelszo)";
             $stmt = $pdo->prepare($sql);
 
             // Paraméterek kötése és végrehajtása
-            $stmt->bindParam(':nev', $username);
-            $stmt->bindParam(':jelszo', $hash);
+            $stmt->bindParam(":nev", $username);
+            $stmt->bindParam(":jelszo", $hash);
 
             try {
                 $stmt->execute();
                 $_SESSION["user_id"] = $pdo->lastInsertId();
                 $_SESSION["user_name"] = $username;
-                $_SESSION["jog"] = 'user';
+                $_SESSION["jog"] = "user";
                 header("Location: profil.php");
                 exit();
             } catch (PDOException $e) {
@@ -86,28 +91,29 @@ if (!empty($_POST)) {
             <a class="menu" href="bejelentkezes.php">Bejelenkezés</a>
         </nav>
     </header>
-    <main class="regist">
+    <main class="main-sectio">
         <?php if (isset($user)):
-            if($user):?>
-        <div class="error">A felhasználó név már foglalt!</div>
-        <?php endif;endif ?>
+            if ($user): ?>
+                <div class="error">A felhasználó név már foglalt!</div>
+            <?php endif;
+        endif; ?>
         <form method="post">
             <label for="nev">Felhasználó név</label>
             <input type="text" name="nev" id="nev" required>
             <?php if (isset($errors["nev"])): ?>
-            <div class="error"><?php echo $errors["nev"]; ?></div>
+                <div class="error"><?php echo $errors["nev"]; ?></div>
             <?php endif; ?>
 
             <label for="jelszo">Jelszó</label>
             <input type="password" name="jelszo" id="jelszo" required>
             <?php if (isset($errors["jelszo"])): ?>
-            <div class="error"><?php echo $errors["jelszo"]; ?></div>
+                <div class="error"><?php echo $errors["jelszo"]; ?></div>
             <?php endif; ?>
 
             <label for="jelszo">Jelszó még egyszer</label>
             <input type="password" name="jelszo_2" id="jelszo_2" required>
             <?php if (isset($errors["jelszo_2"])): ?>
-            <div class="error"><?php echo $errors["jelszo_2"]; ?></div>
+                <div class="error"><?php echo $errors["jelszo_2"]; ?></div>
             <?php endif; ?>
 
             <input type="submit" value="Regisztrálok" >

@@ -5,33 +5,41 @@ body {
     background: #1e1e1e;
     color: #ccc;
 }
-
 .container {
     width: 80%;
     margin: 0 auto;
     padding: 20px;
 }
-
-header {
+header,
+footer {
     background: #121212;
     color: #fff;
     padding: 10px 0;
     text-align: center;
 }
-
 nav a.menu {
     color: #fff;
     margin: 0 15px;
     text-decoration: none;
     font-weight: bold;
 }
-
 nav a.menu:hover {
     text-decoration: underline;
 }
-
 main {
     padding: 20px;
+}
+.main-section {
+    background-color: #2a2a2a;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+.main-section label {
+    margin-top: 10px;
+    color: #ccc;
 }
 
 section.anime-profile {
@@ -44,32 +52,20 @@ section.anime-profile {
     padding: 20px;
 }
 
-section.anime-profile h1 {
-    font-size: 24px;
-    margin-bottom: 10px;
-    color: #fff;
-}
-
 section.anime-profile h2 {
     font-size: 20px;
-    margin-bottom: 10px;
-    color: #ddd;
 }
-
 section.anime-profile p {
     font-size: 16px;
     line-height: 1.6;
     margin-bottom: 20px;
-    color: #ccc;
 }
-
 section.anime-profile img {
     max-width: 100%;
     height: auto;
     display: block;
     margin-bottom: 20px;
 }
-
 section.anime-profile a {
     display: inline-block;
     margin: 5px 0;
@@ -77,174 +73,19 @@ section.anime-profile a {
     text-decoration: none;
     font-size: 16px;
 }
-
 section.anime-profile a:hover {
     text-decoration: underline;
 }
-
 section.anime-profile ul {
     list-style-type: none;
     padding: 0;
 }
-
 section.anime-profile ul li {
     background: #3e3e3e;
     border: 1px solid #555;
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 4px;
-    color: #ccc;
-}
-
-footer {
-    background: #121212;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-main.regist {
-    background-color: #2a2a2a;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-main.login {
-    background-color: #2a2a2a;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-main.regist form {
-    display: flex;
-    flex-direction: column;
-}
-
-main.login form {
-    display: flex;
-    flex-direction: column;
-}
-
-main.regist label {
-    margin-top: 10px;
-    color: #ccc;
-}
-
-main.login label {
-    margin-top: 10px;
-    color: #ccc;
-}
-
-main.regist input[type="text"],
-main.regist input[type="password"] {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #555;
-    border-radius: 3px;
-    background-color: #3e3e3e;
-    color: #ccc;
-}
-
-main.login input[type="text"],
-main.login input[type="password"] {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #555;
-    border-radius: 3px;
-    background-color: #3e3e3e;
-    color: #ccc;
-}
-
-main.regist input[type="submit"] {
-    padding: 10px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-main.regist input[type="submit"] {
-    padding: 10px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-main.regist input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-main.login input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-main.regist input[type="submit"]:focus {
-    outline: none;
-}
-
-main.login input[type="submit"]:focus {
-    outline: none;
-}
-
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
-
-main.login {
-    background-color: #2a2a2a;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-main.login form {
-    display: flex;
-    flex-direction: column;
-}
-
-main.login label {
-    margin-top: 10px;
-    color: #ccc;
-}
-
-main.login input[type="text"],
-main.login input[type="password"] {
-    padding: 10px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #555;
-    border-radius: 3px;
-    background-color: #3e3e3e;
-    color: #ccc;
-}
-
-main.login input[type="submit"] {
-    padding: 10px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-main.login input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-main.login input[type="submit"]:focus {
-    outline: none;
 }
 
 .row {
@@ -252,30 +93,30 @@ main.login input[type="submit"]:focus {
     justify-content: space-between;
     padding: 20px;
 }
-
-/* Oldalsáv stílusa */
-.sidebar {
+.sidebar,
+.content {
     background: #2a2a2a;
     border: 1px solid #3e3e3e;
     border-radius: 8px;
     padding: 20px;
-    width: 30%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     color: #ccc;
     box-sizing: border-box;
 }
-
-.sidebar h2 {
+.sidebar {
+    width: 30%;
+}
+.sidebar h2,
+.content h2 {
     color: #fff;
     font-size: 20px;
     margin-bottom: 15px;
 }
-
-.sidebar p {
+.sidebar p,
+.content p {
     font-size: 16px;
     margin-bottom: 10px;
 }
-
 .sidebar .kijelenkezes {
     padding: 10px;
     color: white;
@@ -284,7 +125,6 @@ main.login input[type="submit"]:focus {
     border-radius: 3px;
     cursor: pointer;
 }
-
 .sidebar .kijelenkezes:hover {
     background-color: #575757;
 }
@@ -309,9 +149,6 @@ main.login input[type="submit"]:focus {
 
 .row .column {
     flex: 1;
-}
-
-.row .column {
     margin: 0 10px;
 }
 
@@ -324,7 +161,7 @@ main.row {
     text-align: left; /* Balra igazítja a szöveget */
 }
 
-main.row h1 {
+h1 {
     font-size: 28px;
     color: #fff;
     margin-bottom: 20px;
@@ -417,43 +254,6 @@ form {
     gap: 10px;
 }
 
-form input[type="text"] {
-    padding: 10px;
-    border: 1px solid #3e3e3e;
-    border-radius: 4px;
-    background-color: #3e3e3e;
-    color: #ccc;
-    width: 200px; /* Szöveg input szélesség */
-    box-sizing: border-box;
-}
-
-form input[type="text"]:focus {
-    outline: none;
-    border-color: #1e90ff;
-}
-
-form input[type="submit"] {
-    padding: 10px 20px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-form input[type="submit"]:focus {
-    outline: none;
-    background-color: #1e90ff;
-}
-
-.error{
-    color: red;
-}
 
 .sidebar {
     background: #2a2a2a;
@@ -464,7 +264,8 @@ form input[type="submit"]:focus {
     margin-bottom: 20px;
 }
 
-.sidebar h2, .sidebar h3 {
+.sidebar h2,
+.sidebar h3 {
     color: #fff;
     margin-bottom: 15px;
     font-size: 20px;
@@ -475,31 +276,131 @@ form input[type="submit"]:focus {
     margin-bottom: 10px;
 }
 
-.sidebar label {
-    display: block;
-    margin: 10px 0 5px;
+
+.sidebar form {
+    margin-bottom: 20px; /* Távolság a formok között */
+}
+
+
+
+#felhasznalo_modositas {
+    flex-direction: column;
+}
+
+#jelszo_modositas {
+    flex-direction: column;
+}
+
+/* Stílusok a modális ablakhoz */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Alapértelmezett stílusok a modális ablakhoz */
+.modal {
+    display: none; /* Alapértelmezetten rejtve */
+    position: fixed; /* Rögzített pozíció a képernyőn */
+    z-index: 1; /* A további elemeken felül lesz */
+    left: 0;
+    top: 0;
+    width: 100%; /* Teljes szélesség */
+    height: 100%; /* Teljes magasság */
+    overflow: auto; /* Görgetés, ha szükséges */
+    background-color: rgba(0, 0, 0, 0.5); /* Fél átlátszó fekete háttér */
+}
+
+/* A modális tartalom stílusa */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* Középső elhelyezkedés */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Szélesség (szükség szerint módosítható) */
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    max-width: 500px; /* Maximális szélesség */
+}
+
+/* Bezárás gomb */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
     font-weight: bold;
 }
 
-.sidebar input[type="text"],
-.sidebar input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #3e3e3e;
-    border-radius: 4px;
-    background-color: #3e3e3e;
-    color: #ccc;
-    box-sizing: border-box;
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.sidebar input[type="text"]:focus,
-.sidebar input[type="password"]:focus {
+/* Cím és egyéb elemek igazítása */
+h3 {
+    margin-top: 0;
+}
+
+label,
+input {
+    display: block;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]{
     outline: none;
     border-color: #1e90ff;
 }
 
-.sidebar input[type="submit"] {
+input[type="text"],
+input[type="password"],
+input[type="number"]{
+    background-color: #3e3e3e;
+    color: #ccc;
+    width: 200px; /* Szöveg input szélesség */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#kereso input[type="text"] {
+    width: 1000%;
+}
+
+input[type="submit"],
+button{
     padding: 10px 20px;
     color: white;
     background-color: #444;
@@ -510,40 +411,27 @@ form input[type="submit"]:focus {
     width: 100%; /* Teljes szélességű gombok */
 }
 
-.sidebar input[type="submit"]:hover {
+input[type="submit"]:hover,
+button{
     background-color: #575757;
 }
 
-.sidebar input[type="submit"]:focus {
+input[type="submit"]:focus{
     outline: none;
     background-color: #1e90ff;
 }
 
-.kijelenkezes {
-    margin-top: 20px;
-    background-color: #ff4444;
-}
-
-.kijelenkezes:hover {
-    background-color: #ff5757;
-}
-
-.kijelenkezes:focus {
-    background-color: #ff7373;
-}
-
-.sidebar form {
-    margin-bottom: 20px; /* Távolság a formok között */
+.error,
+.sikeres{
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
 }
 
 .sikeres {
     color: green;
 }
 
-#felhasznalo_modositas{
-    flex-direction: column;
-}
-
-#jelszo_modositas{
-    flex-direction: column;
+.error{
+    color: red;
 }
