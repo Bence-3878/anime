@@ -41,29 +41,7 @@ main {
     margin-top: 10px;
     color: #ccc;
 }
-.main-section input[type="text"],
-.main-section input[type="password"] {
-    padding: 10px;
-    margin: 5px 0 20px 0;
-    border: 1px solid #555;
-    border-radius: 3px;
-    background-color: #3e3e3e;
-    color: #ccc;
-}
-.main-section input[type="submit"] {
-    padding: 10px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.main-section input[type="submit"]:hover {
-    background-color: #575757;
-}
-.main-section input[type="submit"]:focus {
-    outline: none;
-}
+
 section.anime-profile {
     background: #2a2a2a;
     border: 1px solid #3e3e3e;
@@ -73,14 +51,7 @@ section.anime-profile {
     margin: 20px auto;
     padding: 20px;
 }
-section.anime-profile h1,
-section.anime-profile h2 {
-    color: #fff;
-    margin-bottom: 10px;
-}
-section.anime-profile h1 {
-    font-size: 24px;
-}
+
 section.anime-profile h2 {
     font-size: 20px;
 }
@@ -116,11 +87,7 @@ section.anime-profile ul li {
     margin-bottom: 5px;
     border-radius: 4px;
 }
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-}
+
 .row {
     display: flex;
     justify-content: space-between;
@@ -194,7 +161,7 @@ main.row {
     text-align: left; /* Balra igazítja a szöveget */
 }
 
-main.row h1 {
+h1 {
     font-size: 28px;
     color: #fff;
     margin-bottom: 20px;
@@ -287,43 +254,6 @@ form {
     gap: 10px;
 }
 
-form input[type="text"] {
-    padding: 10px;
-    border: 1px solid #3e3e3e;
-    border-radius: 4px;
-    background-color: #3e3e3e;
-    color: #ccc;
-    width: 200px; /* Szöveg input szélesség */
-    box-sizing: border-box;
-}
-
-form input[type="text"]:focus {
-    outline: none;
-    border-color: #1e90ff;
-}
-
-form input[type="submit"] {
-    padding: 10px 20px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-form input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-form input[type="submit"]:focus {
-    outline: none;
-    background-color: #1e90ff;
-}
-
-.error {
-    color: red;
-}
 
 .sidebar {
     background: #2a2a2a;
@@ -346,70 +276,12 @@ form input[type="submit"]:focus {
     margin-bottom: 10px;
 }
 
-.sidebar label {
-    display: block;
-    margin: 10px 0 5px;
-    font-weight: bold;
-}
-
-.sidebar input[type="text"],
-.sidebar input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #3e3e3e;
-    border-radius: 4px;
-    background-color: #3e3e3e;
-    color: #ccc;
-    box-sizing: border-box;
-}
-
-.sidebar input[type="text"]:focus,
-.sidebar input[type="password"]:focus {
-    outline: none;
-    border-color: #1e90ff;
-}
-
-.sidebar input[type="submit"] {
-    padding: 10px 20px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    width: 100%; /* Teljes szélességű gombok */
-}
-
-.sidebar input[type="submit"]:hover {
-    background-color: #575757;
-}
-
-.sidebar input[type="submit"]:focus {
-    outline: none;
-    background-color: #1e90ff;
-}
-
-.kijelenkezes {
-    margin-top: 20px;
-    background-color: #ff4444;
-}
-
-.kijelenkezes:hover {
-    background-color: #ff5757;
-}
-
-.kijelenkezes:focus {
-    background-color: #ff7373;
-}
 
 .sidebar form {
     margin-bottom: 20px; /* Távolság a formok között */
 }
 
-.sikeres {
-    color: green;
-}
+
 
 #felhasznalo_modositas {
     flex-direction: column;
@@ -504,29 +376,62 @@ input {
     width: 100%;
 }
 
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="number"]{
+    outline: none;
+    border-color: #1e90ff;
+}
+
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="number"]{
+    background-color: #3e3e3e;
+    color: #ccc;
+    width: 200px; /* Szöveg input szélesség */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
 }
 
-input[type="submit"] {
-    background-color: #4caf50;
-    color: white;
+#kereso input[type="text"] {
+    width: 1000%;
+}
+
+input[type="submit"],
+button{
     padding: 10px 20px;
-    margin-top: 10px;
+    color: white;
+    background-color: #444;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%; /* Teljes szélességű gombok */
 }
 
-input[type="submit"]:hover {
-    background-color: #45a049;
+input[type="submit"]:hover,
+button{
+    background-color: #575757;
 }
 
-.error {
-    color: #ff0000;
+input[type="submit"]:focus{
+    outline: none;
+    background-color: #1e90ff;
+}
+
+.error,
+.sikeres{
     font-weight: bold;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.sikeres {
+    color: green;
+}
+
+.error{
+    color: red;
 }
