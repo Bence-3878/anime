@@ -67,7 +67,7 @@ if (!isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <title><?=$ev.' '. $szezon?> szezon</title>
-    <link rel="icon" href="képek/ikon.jpg" type="image/x-icon">
+    <link rel="icon" href="kép/ikon.jpg" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>

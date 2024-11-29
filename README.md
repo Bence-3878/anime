@@ -12,7 +12,7 @@ Film adatbázis
 Felhasználó adatok
 Felhasználók listája
 
-![](képek/schema.png)
+![](kép/schema.png)
 
 ### Elérhető oldalak és funkciók listája
 
