@@ -60,8 +60,9 @@ if (!$result) {
 
 <head>
     <meta charset="UTF-8">
-    <title><?= htmlspecialchars($result["romanji_cim"]) ?></title>
-    <link rel="icon" href="képek/ikon.jpg" type="image/x-icon">
+    <title><?= htmlspecialchars($result['romanji_cim']); ?></title>
+    <link rel="icon" href="kép/ikon.jpg" type="image/x-icon">
+
     <link rel="stylesheet" href="style.css">
 </head>
 

@@ -79,6 +79,7 @@ if (!empty($_POST)) {
     <meta charset="UTF-8">
     <title>Regisztárció</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="container">

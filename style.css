@@ -117,17 +117,6 @@ section.anime-profile ul li {
     font-size: 16px;
     margin-bottom: 10px;
 }
-.sidebar .kijelenkezes {
-    padding: 10px;
-    color: white;
-    background-color: #444;
-    border: none;
-    border-radius: 3px;
-    cursor: pointer;
-}
-.sidebar .kijelenkezes:hover {
-    background-color: #575757;
-}
 
 /* Fő tartalom stílusa */
 .content {
