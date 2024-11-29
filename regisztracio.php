@@ -86,7 +86,7 @@ if (!empty($_POST)) {
             <a class="menu" href="bejelentkezes.php">Bejelenkezés</a>
         </nav>
     </header>
-    <main class="regist">
+    <main class="main-sectio">
         <?php if (isset($user)):
             if($user):?>
         <div class="error">A felhasználó név már foglalt!</div>

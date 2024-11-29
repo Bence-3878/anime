@@ -92,7 +92,7 @@ if (!empty($_POST)) {
             <a class="menu" href="bejelentkezes.php">Bejelenkezés</a>
         </nav>
     </header>
-    <main class="login">
+    <main class="main-sectio">
         <form action="bejelentkezes.php" method="post">
             <label for="username">Felhasználónév:</label>
             <?php if (!empty($errors['username'])): ?>
