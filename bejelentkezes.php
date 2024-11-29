@@ -1,7 +1,7 @@
 <?php
-
 session_start();
 
+// Ha a felhasználó már bejelentkezett, átirányítjuk a profil oldalra
 if (isset($_SESSION["user_id"])) {
     header("Location: profil.php");
     exit();
@@ -9,6 +9,7 @@ if (isset($_SESSION["user_id"])) {
 
 $errors = [];
 
+// A bejelentkezési űrlap kezelése
 if (!empty($_POST)) {
     // Kapcsolódás az adatbázishoz
     $dsn = "mysql:host=localhost;dbname=hazi;charset=utf8";
@@ -23,51 +24,50 @@ if (!empty($_POST)) {
         die("Sikertelen kapcsolódás: " . $e->getMessage());
     }
 
-    if (empty($_POST["nev"])) {
-        $errors["nev"] = "név megadása kötelező";
+    if (empty($_POST["username"])) {
+        $errors["username"] = "név megadása kötelező";
+    }
+    if (empty($_POST["password"])) {
+        $errors["password"] = "jelszó megadása kötelező";
     }
 
-    if (empty($_POST["jelszo"])) {
-        $errors["jelszo"] = "jelszó megadása kötelező";
-    }
+    if (empty($errors["username"]) && empty($errors["password"])) {
+        try {
+            $username = $_POST["username"];
+            $password = $_POST["password"];
 
-    if (empty($_POST["jelszo_2"])) {
-        $errors["jelszo_2"] = "jelszó megadása kötelező";
-    }
-
-    if ($_POST["jelszo"] != $_POST["jelszo_2"]) {
-        $errors["jelszo"] = "a jelszavak nem egyeznek";
-    }
-
-    if (empty($errors)) {
-        $username = $_POST["nev"];
-        $password = $_POST["jelszo"];
-        $hash = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "SELECT * FROM felhasznalo WHERE nev = :nev";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(":nev", $username);
-        $stmt->execute();
-        $user = $stmt->fetch(PDO::FETCH_ASSOC);
-        if (!$user) {
-            $sql =
-                "INSERT INTO felhasznalo (nev, jelszo) VALUES (:nev, :jelszo)";
+            // Felhasználó keresése az adatbázisban
+            $sql = "SELECT * FROM felhasznalo WHERE nev = :nev";
             $stmt = $pdo->prepare($sql);
-
-            // Paraméterek kötése és végrehajtása
             $stmt->bindParam(":nev", $username);
-            $stmt->bindParam(":jelszo", $hash);
-
-            try {
-                $stmt->execute();
-                $_SESSION["user_id"] = $pdo->lastInsertId();
-                $_SESSION["user_name"] = $username;
-                $_SESSION["jog"] = "user";
-                header("Location: profil.php");
-                exit();
-            } catch (PDOException $e) {
-                echo "Hiba történt: " . $e->getMessage();
+            if (!$stmt->execute()) {
+                throw new Exception("Hiba a SQL végrehajtása közben.");
             }
+
+            $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            if ($user) {
+                // Jelszó ellenőrzése
+                if (password_verify($password, $user["jelszo"])) {
+                    // Sikeres bejelentkezés
+                    $_SESSION["user_id"] = $user["id"];
+                    $_SESSION["user_name"] = $user["nev"];
+                    $_SESSION["jog"] = $user["jogosultsag"];
+                    header("Location: profil.php");
+                    exit();
+                } else {
+                    // Helytelen jelszó
+                    $errors["password"] =
+                        "Helytelen felhasználónév vagy jelszó.";
+                }
+            } else {
+                // Felhasználó nem található
+                $errors["username"] = "Helytelen felhasználónév vagy jelszó.";
+            }
+        } catch (Exception $e) {
+            $errors["error"] = "Hiba történt: " . $e->getMessage();
+        } finally {
+            $pdo = null; // PDO kapcsolat törlése
         }
     }
 }
@@ -77,7 +77,7 @@ if (!empty($_POST)) {
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
-    <title>Regisztárció</title>
+    <title>Bejelentkezés</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -92,31 +92,30 @@ if (!empty($_POST)) {
         </nav>
     </header>
     <main class="main-sectio">
-        <?php if (isset($user)):
-            if ($user): ?>
-                <div class="error">A felhasználó név már foglalt!</div>
-            <?php endif;
-        endif; ?>
-        <form method="post">
-            <label for="nev">Felhasználó név</label>
-            <input type="text" name="nev" id="nev" required>
-            <?php if (isset($errors["nev"])): ?>
-                <div class="error"><?php echo $errors["nev"]; ?></div>
+        <form action="bejelentkezes.php" method="post">
+            <label for="username">Felhasználónév:</label>
+            <?php if (!empty($errors["username"])): ?>
+                <span class="error"> <?= $errors["username"] ?></span>
             <?php endif; ?>
-
-            <label for="jelszo">Jelszó</label>
-            <input type="password" name="jelszo" id="jelszo" required>
-            <?php if (isset($errors["jelszo"])): ?>
-                <div class="error"><?php echo $errors["jelszo"]; ?></div>
+            <?php if (!empty($_POST["username"])): ?>
+                <input type="text" id="username" name="username" value="<?= $_POST[
+                "username"
+                ] ?>" required>
+            <?php else: ?>
+                <input type="text" id="username" name="username" required>
             <?php endif; ?>
-
-            <label for="jelszo">Jelszó még egyszer</label>
-            <input type="password" name="jelszo_2" id="jelszo_2" required>
-            <?php if (isset($errors["jelszo_2"])): ?>
-                <div class="error"><?php echo $errors["jelszo_2"]; ?></div>
+            <label for="password">Jelszó:</label>
+            <?php if (!empty($errors["password"])): ?>
+                <span class="error"> <?= $errors["password"] ?></span>
             <?php endif; ?>
-
-            <input type="submit" value="Regisztrálok" >
+            <?php if (!empty($_POST["password"])): ?>
+                <input type="password" id="password" name="password" value="<?= $_POST[
+                "password"
+                ] ?>" required>
+            <?php else: ?>
+                <input type="password" id="password" name="password" required>
+            <?php endif; ?>
+            <input type="submit" value="Bejelentkezés">
         </form>
     </main>
 </div>
