@@ -10,7 +10,8 @@ body {
     margin: 0 auto;
     padding: 20px;
 }
-header, footer {
+header,
+footer {
     background: #121212;
     color: #fff;
     padding: 10px 0;
@@ -320,7 +321,7 @@ form input[type="submit"]:focus {
     background-color: #1e90ff;
 }
 
-.error{
+.error {
     color: red;
 }
 
@@ -333,7 +334,8 @@ form input[type="submit"]:focus {
     margin-bottom: 20px;
 }
 
-.sidebar h2, .sidebar h3 {
+.sidebar h2,
+.sidebar h3 {
     color: #fff;
     margin-bottom: 15px;
     font-size: 20px;
@@ -409,11 +411,11 @@ form input[type="submit"]:focus {
     color: green;
 }
 
-#felhasznalo_modositas{
+#felhasznalo_modositas {
     flex-direction: column;
 }
 
-#jelszo_modositas{
+#jelszo_modositas {
     flex-direction: column;
 }
 
@@ -495,7 +497,8 @@ h3 {
     margin-top: 0;
 }
 
-label, input {
+label,
+input {
     display: block;
     margin-bottom: 10px;
     width: 100%;
@@ -510,7 +513,7 @@ input[type="password"] {
 }
 
 input[type="submit"] {
-    background-color: #4CAF50;
+    background-color: #4caf50;
     color: white;
     padding: 10px 20px;
     margin-top: 10px;
